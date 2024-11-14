@@ -1,0 +1,9 @@
+{
+    "String": {
+        "HighScore": "HIGH SCORE: ",
+        "MainTitle": "ARKANOID",
+        "Start": "GAME START",
+		"Exit" : "EXIT",
+		"Score" : "Score: "
+    }
+}

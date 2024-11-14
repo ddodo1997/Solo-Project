@@ -1,0 +1,12 @@
+{
+    "ID": "Die",
+    "LoopType": 0,
+    "FPS": 10,
+    "texId": "graphics/vause_sheet.png",
+    "Frames":
+    [
+        [176,0,32,8],
+        [176,8,32,8],
+        [176,16,32,8]
+    ]
+}
