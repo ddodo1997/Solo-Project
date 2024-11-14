@@ -68,7 +68,7 @@ void TileMap::Release()
 void TileMap::Reset()
 {
 	texture = &TEXTURE_MGR.Get(texTileMapId);
-	Set({ 20,33 }, { 32.f,32.f });
+	Set({ 20,30 }, { 32.f,32.f });
 	SetPosition({ 0.f,0.f });
 	SetRotation(0.f);
 	SetScale({ 1.f,1.f });

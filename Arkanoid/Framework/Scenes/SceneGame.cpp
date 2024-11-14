@@ -54,6 +54,10 @@ void SceneGame::Update(float dt)
 			ball->Fire({ 1.f,-1.f }, 500.f);
 		}
 	}
+
+
+
+
 	///배속 코드
 	if (InputMgr::GetKey(sf::Keyboard::Z))
 	{
@@ -63,11 +67,20 @@ void SceneGame::Update(float dt)
 	{
 		FRAMEWORK.SetTimeScale(1.f);
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::X))
+
+	if (InputMgr::GetKey(sf::Keyboard::X))
 	{
-		Variables::isDrawHitBox = !Variables::isDrawHitBox;
+		FRAMEWORK.SetTimeScale(0.3f);
+	}
+	if (InputMgr::GetKeyUp(sf::Keyboard::X))
+	{
+		FRAMEWORK.SetTimeScale(1.f);
 	}
 
+	if (InputMgr::GetKeyDown(sf::Keyboard::C))
+	{
+		Variables::isDrawHitBox = !Variables::isDrawHitBox;
+	}	
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)

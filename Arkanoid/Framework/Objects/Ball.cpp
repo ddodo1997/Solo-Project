@@ -58,7 +58,7 @@ void Ball::Reset()
 		mapBounds.left + radius,
 		mapBounds.top + radius * 2,
 		mapBounds.width + mapBounds.left - radius,
-		mapBounds.height + mapBounds.top - radius
+		mapBounds.height + mapBounds.top
 	};
 
 	isMoving = false;
@@ -88,7 +88,7 @@ void Ball::Update(float dt)
 		newPos.y = movableBounds.top;
 		direction.y *= -1.f;
 	}
-	else if (newPos.y > movableBounds.height + 300.f)
+	else if (newPos.y > movableBounds.height)
 	{
 		/*newPos.y = movableBounds.height;
 		direction.y *= -1.f;*/
