@@ -82,6 +82,7 @@
     <ClCompile Include="Framework\General\Variables.cpp">
       <Filter>Framework\General</Filter>
     </ClCompile>
+    <ClCompile Include="Bricks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -177,6 +178,7 @@
     <ClInclude Include="Framework\General\Utils.h">
       <Filter>Framework\General</Filter>
     </ClInclude>
+    <ClInclude Include="Bricks.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

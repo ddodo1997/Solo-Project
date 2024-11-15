@@ -3,7 +3,8 @@
 class TileMap : public GameObject
 {
 protected:
-	sf::VertexArray va;
+	sf::VertexArray tileBackground;
+	sf::VectexArray tileOutLine;
 	sf::Texture* texture;
 	std::string texTileMapId = "graphics/Arcade - Arkanoid - Blocks & Backgrounds.png";
 

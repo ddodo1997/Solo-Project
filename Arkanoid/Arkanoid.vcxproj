@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bricks.cpp" />
     <ClCompile Include="Framework\Animation\Animator.cpp" />
     <ClCompile Include="Framework\Animation\AnimationClip.cpp" />
     <ClCompile Include="Framework\General\SaveData.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Framework\Objects\Text\UiInGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bricks.h" />
     <ClInclude Include="Framework\Animation\Animator.h" />
     <ClInclude Include="Framework\Animation\AnimationClip.h" />
     <ClInclude Include="Framework\General\Defines.h" />

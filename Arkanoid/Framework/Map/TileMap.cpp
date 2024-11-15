@@ -84,7 +84,7 @@ void TileMap::Draw(sf::RenderWindow& window)
 	sf::RenderStates state;
 	state.texture = this->texture;
 	state.transform = this->transform;
-	window.draw(va, state);
+	window.draw(tileBackground, state);
 }
 
 void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
@@ -92,9 +92,9 @@ void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
 	cellcount = count;
 	cellsize = size;
 
-	va.clear();
-	va.setPrimitiveType(sf::Quads);
-	va.resize(cellcount.x * cellcount.y * 4);
+	tileBackground.clear();
+	tileBackground.setPrimitiveType(sf::Quads);
+	tileBackground.resize(cellcount.x * cellcount.y * 4);
 	// 각 사각형의 각 정점의 위치 오프셋
 	sf::Vector2f posOffset[4] =
 	{
@@ -127,11 +127,11 @@ void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
 				//현재 정점의 인덱스
 				int vertexIdx = quadIdx * 4 + k;
 				// 각 타일 기준 위치에서의 정점 위치 설정
-				va[vertexIdx].position = posOffset[k] + quadPos;
+				tileBackground[vertexIdx].position = posOffset[k] + quadPos;
 				// 텍스처 좌표 설정
-				va[vertexIdx].texCoords = texCoord[k];
+				tileBackground[vertexIdx].texCoords = texCoord[k];
 				// 어떤 텍스처 패턴 사용할건지 적용 
-				va[vertexIdx].texCoords.y += texIdx * 32.f;
+				tileBackground[vertexIdx].texCoords.y += texIdx * 32.f;
 			}
 		}
 	}

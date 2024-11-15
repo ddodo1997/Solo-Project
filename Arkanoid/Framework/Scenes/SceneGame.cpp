@@ -20,7 +20,6 @@ void SceneGame::Init()
 
 void SceneGame::Enter()
 {
-
 	Scene::Enter();
 	sf::Vector2f size = FRAMEWORK.GetWindowSizeF();
 	worldView.setSize(size);
@@ -28,7 +27,6 @@ void SceneGame::Enter()
 
 	uiView.setSize(size);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
-
 }
 
 void SceneGame::Exit()
