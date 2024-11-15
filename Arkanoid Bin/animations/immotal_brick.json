@@ -1,0 +1,15 @@
+{
+    "ID": "Immotal",
+    "LoopType": 0,
+    "FPS": 7,
+    "texId": "graphics/Arcade - Arkanoid - Blocks & Backgrounds.png",
+    "Frames":
+    [
+        [0, 24, 16, 8],
+        [16, 24, 16, 8],
+        [32, 24, 16, 8],
+        [48, 24, 16, 8],
+        [64, 24, 16, 8],
+        [80, 24, 16, 8]
+    ]
+}

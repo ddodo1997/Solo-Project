@@ -1,0 +1,50 @@
+{
+    "White": {
+        "Score": [50],
+        "HP": [1],
+		"Position" : [0,0,16,8]
+    },
+    "Orange": {
+        "Score": [60],
+        "HP":[ 1],
+		"Position" : [16,0,16,8]
+    },
+    "Sky": {
+        "Score":[ 70],
+        "HP":[ 1],
+		"Position" : [32,0,16,8]
+    },
+    "Green": {
+        "Score": [80],
+        "HP": [1],
+		"Position" : [48,0,16,8]
+    },
+    "Red": {
+        "Score": [90],
+        "HP": [1],
+		"Position" : [0,8,16,8]
+    },
+    "Blue": {
+        "Score": [100],
+        "HP": [1],
+		"Position" : [16,8,16,8]
+    },
+    "Pink": {
+        "Score": [110],
+        "HP": [1],
+		"Position" : [32,8,16,8]
+    },
+    "Yello": {
+        "Score": [120],
+        "HP": [1],
+		"Position" : [48,8,16,8]
+    },
+    "Super": {
+        "Score": [150],
+        "HP": [5]
+    },
+    "Immotal": {
+        "Score": [0],
+        "HP": [1000]
+    }
+}

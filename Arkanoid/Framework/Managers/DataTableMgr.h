@@ -33,3 +33,6 @@ inline T* DataTableMgr::Get(DataTable::Types t)
 
 #define DATATABLE_MGR (DataTableMgr::Instance())
 #define STRING_TABLE (DATATABLE_MGR.Get<StringTable>(DataTable::Types::String))
+#define BRICKS_TABLE (DATATABLE_MGR.Get<BricksTable>(DataTable::Types::Bricks))
+#define STAGES_TABLE (DATATABLE_MGR.Get<StageTable>(DataTable::Types::Stages))
+//#define ITEM_TABLE (DATATABLE_MGR.Get<StringTable>(DataTable::Types::Item))

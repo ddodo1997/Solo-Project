@@ -68,7 +68,9 @@ void TileMap::Release()
 void TileMap::Reset()
 {
 	texture = &TEXTURE_MGR.Get(texTileMapId);
-	Set({ 20,30 }, { 32.f,32.f });
+	SetBackGround({ 20,30 }, { 32.f,32.f });
+	SetSideLine({ 1,24 }, { 8.f,40.f });
+	SetUpperLine({ 20,1 }, { 32.f,8.f });
 	SetPosition({ 0.f,0.f });
 	SetRotation(0.f);
 	SetScale({ 1.f,1.f });
@@ -84,10 +86,21 @@ void TileMap::Draw(sf::RenderWindow& window)
 	sf::RenderStates state;
 	state.texture = this->texture;
 	state.transform = this->transform;
+	sf::RenderStates stateLeft;
+	stateLeft.texture = this->texture;
+	stateLeft.transform = this->transformLeft;
+	sf::RenderStates stateRight;
+	stateRight.texture = this->texture;
+	stateRight.transform = this->transformRight;
 	window.draw(tileBackground, state);
+	window.draw(tileLeftSide, stateLeft);
+	window.draw(tileRightSide, stateRight);
+	window.draw(tileUpperSide, state);
+	window.draw(tileLeftEdge, stateLeft);
+	window.draw(tileRightEdge, stateRight);
 }
 
-void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
+void TileMap::SetBackGround(sf::Vector2i count, sf::Vector2f size)
 {
 	cellcount = count;
 	cellsize = size;
@@ -103,7 +116,7 @@ void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
 		{size.x, size.y},
 		{0.f, size.y}
 	};
-	// 타일의 텍스처 좌표를 정의, 각 타일이 다르게 보이도록 임의의 텍스처 좌표를 사용
+	// 타일의 텍스처 좌표를 정의
 	sf::Vector2f texCoord[4] =
 	{
 		{0.f, 0.f},
@@ -137,6 +150,150 @@ void TileMap::Set(sf::Vector2i count, sf::Vector2f size)
 	}
 }
 
+void TileMap::SetSideLine(sf::Vector2i count, sf::Vector2f sideSize)
+{
+	tileLeftSide.clear();
+	tileLeftSide.setPrimitiveType(sf::Quads);
+	tileLeftSide.resize(count.x * count.y * 4);
+
+	tileRightSide.clear();
+	tileRightSide.setPrimitiveType(sf::Quads);
+	tileRightSide.resize(count.x * count.y * 4);
+	// 각 사각형의 각 정점의 위치 오프셋
+
+	sf::Vector2f posOffset[4] =
+	{
+		{0.f, 0.f},
+		{sideSize.x, 0.f},
+		{sideSize.x,sideSize.y},
+		{0.f, sideSize.y}
+	};
+	// 타일의 텍스처 좌표를 정의
+	sf::Vector2f texCoord[4] =
+	{
+		{0.f, 0.f},
+		{8.f, 0.f},
+		{8.f,40.f},
+		{0.f, 40.f}
+	};
+	for (int i = 0; i < count.y; i++)
+	{
+		for (int j = 0; j < count.x; j++)
+		{
+			//현재 타일의 인덱스
+			int quadIdx = i * count.x + j;
+			// 현재 타일의 좌표(좌측 상단으로 설정)	
+			sf::Vector2f quadPos({ j * sideSize.x, i * sideSize.y });
+			// 사각형을 나타내기 위해 4개의 정점을 생성하여 텍스쳐 그림
+			for (int k = 0; k < 4; k++)
+			{
+				int vertexIdx = quadIdx * 4 + k;
+
+				tileLeftSide[vertexIdx].position = posOffset[k] + quadPos;
+				tileLeftSide[vertexIdx].texCoords = texCoord[k];
+				tileLeftSide[vertexIdx].texCoords.x += 24.f;
+				tileLeftSide[vertexIdx].texCoords.y += 128.f;
+
+				tileRightSide[vertexIdx].position = posOffset[k] + quadPos;
+				tileRightSide[vertexIdx].texCoords = texCoord[k];
+				tileRightSide[vertexIdx].texCoords.x += 24.f;
+				tileRightSide[vertexIdx].texCoords.y += 128.f;
+			}
+		}
+	}
+
+}
+
+void TileMap::SetUpperLine(sf::Vector2i count, sf::Vector2f upperSize)
+{
+	tileUpperSide.clear();
+	tileUpperSide.setPrimitiveType(sf::Quads);
+	tileUpperSide.resize(count.x * count.y * 4);
+
+	sf::Vector2f posOffset[4] =
+	{
+		{0.f, 0.f},
+		{upperSize.x, 0.f},
+		{ upperSize.x, upperSize.y },
+		{0.f, upperSize.y}
+	};
+
+	sf::Vector2f texCoord[4] =
+	{
+		{0.f, 0.f},
+		{32.f, 0.f},
+		{ 32.f, 8.f },
+		{0.f, 8.f}
+	};
+
+	for (int i = 0; i < count.y; i++)
+	{
+		for (int j = 0; j < count.x; j++)
+		{
+			int quadIdx = i * count.y + j;
+			sf::Vector2f quadPos({ j * upperSize.x, i * upperSize.y });
+			for (int k = 0; k < 4; k++)
+			{
+				int vertexIdx = quadIdx * 4 + k;
+
+				tileUpperSide[vertexIdx].position = posOffset[k] + quadPos;
+				tileUpperSide[vertexIdx].texCoords = texCoord[k];
+				tileUpperSide[vertexIdx].texCoords.x += 56.f;
+				tileUpperSide[vertexIdx].texCoords.y += 128.f;
+			}
+		}
+	}
+
+	{
+		tileLeftEdge.clear();
+		tileLeftEdge.setPrimitiveType(sf::Quads);
+		tileLeftEdge.resize(4);
+
+		tileRightEdge.clear();
+		tileRightEdge.setPrimitiveType(sf::Quads);
+		tileRightEdge.resize(4);
+
+		sf::Vector2f posOffset[4] =
+		{
+			{0.f, 0.f},
+			{8.f, 0.f},
+			{8.f,8.f},
+			{0.f, 8.f}
+		};
+		// 타일의 텍스처 좌표를 정의
+		sf::Vector2f texCoord[4] =
+		{
+			{0.f, 0.f},
+			{8.f, 0.f},
+			{8.f,8.f},
+			{0.f, 8.f}
+		};
+
+		for (int i = 0; i < 1; i++)
+		{
+			for (int j = 0; j < 1; j++)
+			{
+				int quadIdx = i * 1 + j;
+				sf::Vector2f quadPos({ j * 8.f, i * 8.f });
+				for (int k = 0; k < 4; k++)
+				{
+					int vertexIdx = quadIdx * 4 + k;
+
+					tileLeftEdge[vertexIdx].position = posOffset[k] + quadPos;
+					tileLeftEdge[vertexIdx].texCoords = texCoord[k];
+					tileLeftEdge[vertexIdx].texCoords.x += 0.f;
+					tileLeftEdge[vertexIdx].texCoords.y += 128.f;
+
+					tileRightEdge[vertexIdx].position = posOffset[k] + quadPos;
+					tileRightEdge[vertexIdx].texCoords = texCoord[k];
+					tileRightEdge[vertexIdx].texCoords.x += 16.f;
+					tileRightEdge[vertexIdx].texCoords.y += 128.f;
+				}
+			}
+		}
+	}
+}
+
 void TileMap::UpdateTransform()
 {
 	transform = sf::Transform::Identity;
@@ -144,4 +301,16 @@ void TileMap::UpdateTransform()
 	transform.rotate(rotation);
 	transform.scale(scale);
 	transform.translate(-origin);
+
+	transformLeft = sf::Transform::Identity;
+	transformLeft.translate({ position.x - cellcount.x * 0.4f ,position.y });
+	transformLeft.rotate(rotation);
+	transformLeft.scale(scale);
+	transformLeft.translate(-origin);
+
+	transformRight = sf::Transform::Identity;
+	transformRight.translate({ position.x + cellcount.x * cellsize.x,position.y });
+	transformRight.rotate(rotation);
+	transformRight.scale(scale);
+	transformRight.translate(-origin);
 }

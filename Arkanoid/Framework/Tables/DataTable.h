@@ -5,9 +5,9 @@ public:
 	enum class Types
 	{
 		String,
-		Vause,
+		Bricks,
+		Stages,
 		Item,
-		Blocks,
 	};
 	static const int TotalType = 4;
 

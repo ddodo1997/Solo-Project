@@ -29,6 +29,7 @@ public:
 	void Reset()override;
 	void Release()override;
 	void Update(float dt)override;
+	void FixedUpdate(float dt) override;
 	void Draw(sf::RenderWindow& window)override;
 
 	void Fire(const sf::Vector2f& d, float s)

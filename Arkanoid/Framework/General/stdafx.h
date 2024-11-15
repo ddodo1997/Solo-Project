@@ -32,6 +32,8 @@ using json = nlohmann::json;
 #include "SoundMgr.h"
 #include "DataTable.h"
 #include "StringTable.h"
+#include "BricksTable.h"
+#include "StageTable.h"
 #include "DataTableMgr.h"
 #include "Variables.h"
 #include "AnimationClip.h"

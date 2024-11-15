@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "TileMap.h"
 #include "UiInGame.h"
+#include "Bricks.h"
 SceneGame::SceneGame() : Scene(SceneIds::Game)
 {
 
@@ -15,7 +16,28 @@ void SceneGame::Init()
 	vause = AddGo(new Vause("Vause"));
 	ball = AddGo(new Ball("Ball"));
 	uiInGame = AddGo(new UiInGame("UiInGame"));
+	InitBricks();
+
+
+
 	Scene::Init();
+}
+
+void SceneGame::InitBricks()
+{
+	bricks.resize(bricksSize.x);
+	for (int i = 0; i < bricksSize.x; i++)
+	{
+		bricks[i].resize(bricksSize.y);
+	}
+	for (int i = 0; i < bricksSize.x; i++)
+	{
+		for (int j = 0; j < bricksSize.y; j++)
+		{
+			bricks[i][j] = AddGo(new Bricks("Bricks"));
+			//bricks[i][j]->SetActive(false);
+		}
+	}
 }
 
 void SceneGame::Enter()
@@ -27,6 +49,8 @@ void SceneGame::Enter()
 
 	uiView.setSize(size);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
+
+	SetStage();
 }
 
 void SceneGame::Exit()
@@ -38,14 +62,14 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
 	UpdateUi();
-	if(vause->IsGameover())
+	if (vause->IsGameover())
 	{
 		std::cout << "Gameover!!" << std::endl;
 	}
 
 	if (!ball->isMove())
 	{
-		ball->SetPosition(vause->GetPosition()); 
+		ball->SetPosition(vause->GetPosition());
 
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
@@ -78,7 +102,7 @@ void SceneGame::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::C))
 	{
 		Variables::isDrawHitBox = !Variables::isDrawHitBox;
-	}	
+	}
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -90,4 +114,18 @@ void SceneGame::UpdateUi()
 {
 	uiInGame->SetScore(score);
 	uiInGame->SetHighScore(highScore);
+}
+
+void SceneGame::SetStage()
+{
+	for (int i = 0; i < bricksSize.x; i++)
+	{
+		for (int j = 0; j < bricksSize.y; j++)
+		{
+			bricks[i][j]->SetType((Bricks::Types)STAGES_TABLE->Get("Stage1")[i][j]);
+			auto size = bricks[i][j]->GetLocalBounds();
+			auto scale = bricks[i][j]->GetScale();
+			bricks[i][j]->SetPosition({ -320.f + j * size.width * scale.x, -400.f + i * size.height * scale.y });
+		}
+	}
 }

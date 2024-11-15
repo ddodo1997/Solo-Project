@@ -27,7 +27,7 @@ protected:
 	std::queue<std::string> playQueue;
 
 	AnimationClip* currentClip;
-	sf::Sprite* sprite;
+	sf::Sprite* sprite = nullptr;
 
 	bool isPlaying = false;
 
@@ -67,5 +67,9 @@ public:
 	}
 
 	void SetSpeed(float speed);
+
+	explicit operator bool() const {
+		return sprite != nullptr;
+	}
 };
 

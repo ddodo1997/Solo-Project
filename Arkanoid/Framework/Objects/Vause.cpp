@@ -59,11 +59,11 @@ void Vause::ChangeAni(const std::string& id, const std::string& nextId)
 
 void Vause::Init()
 {
+	SetScale({ 2.f,2.f });
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
 	animator.SetTarget(&body);
 	SetOrigin(Origins::TC);
-	SetScale({ 2.f,2.f });
 }
 
 void Vause::Release()

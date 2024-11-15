@@ -4,14 +4,26 @@ class TileMap : public GameObject
 {
 protected:
 	sf::VertexArray tileBackground;
-	sf::VectexArray tileOutLine;
+	sf::VertexArray tileLeftSide;
+	sf::VertexArray tileRightSide;
+	sf::VertexArray tileUpperSide;
+
+	sf::VertexArray tileLeftEdge;
+	sf::VertexArray tileRightEdge;
+
+
 	sf::Texture* texture;
 	std::string texTileMapId = "graphics/Arcade - Arkanoid - Blocks & Backgrounds.png";
 
 	sf::Vector2i cellcount;
 	sf::Vector2f cellsize;
 
+	sf::Vector2f sideCellSize = { 8.f,40.f };
+	sf::Vector2f upperCellSize = { 32.f, 8.f };
+
 	sf::Transform transform;
+	sf::Transform transformLeft;
+	sf::Transform transformRight;
 public:
 	TileMap(const std::string& name = "");
 	~TileMap() = default;
@@ -25,13 +37,18 @@ public:
 
 	sf::FloatRect GetLocalBounds()const override;
 	sf::FloatRect GetGlobalBounds()const override;
+
+
 	void Init() override;
 	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void Set(sf::Vector2i count, sf::Vector2f size);
+	void SetBackGround(sf::Vector2i count, sf::Vector2f size);
+	void SetSideLine(sf::Vector2i count, sf::Vector2f sideSize);
+	void SetUpperLine(sf::Vector2i count, sf::Vector2f upperSize);
+
 	sf::Vector2i GetCellCount() const { return cellcount; }
 	sf::Vector2f GetCellSize() const { return cellsize; }
 	void UpdateTransform();

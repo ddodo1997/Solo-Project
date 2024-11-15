@@ -56,7 +56,7 @@ void Ball::Reset()
 	sf::FloatRect mapBounds = map->GetGlobalBounds();
 	movableBounds = {
 		mapBounds.left + radius,
-		mapBounds.top + radius * 2,
+		mapBounds.top + radius * 2 + 8.f,
 		mapBounds.width + mapBounds.left - radius,
 		mapBounds.height + mapBounds.top
 	};
@@ -96,6 +96,12 @@ void Ball::Update(float dt)
 		vause->SetGameover(true);
 	}
 
+	SetPosition(newPos);
+	hitBox.UpdateTr(ball, ball.getGlobalBounds());
+}
+
+void Ball::FixedUpdate(float dt)
+{
 	if (vause != nullptr)
 	{
 		auto vauseBounds = vause->GetBatBounds();
@@ -103,15 +109,12 @@ void Ball::Update(float dt)
 		{
 			if (Utils::CheckCollision(hitBox, vause->GetHitBox()))
 			{
-				newPos.y = vauseBounds.top;
+				position.y = vauseBounds.top;
 				direction.y *= -1.f;
 				score++;
 			}
 		}
 	}
-
-	SetPosition(newPos);
-	hitBox.UpdateTr(ball, ball.getGlobalBounds());
 }
 
 void Ball::Draw(sf::RenderWindow& window)

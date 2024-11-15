@@ -1,0 +1,15 @@
+{
+    "ID": "Super",
+    "LoopType": 0,
+    "FPS": 7,
+    "texId": "graphics/Arcade - Arkanoid - Blocks & Backgrounds.png",
+    "Frames":
+    [
+        [0, 16, 16, 8],
+        [16, 16, 16, 8],
+        [32, 16, 16, 8],
+        [48, 16, 16, 8],
+        [64, 16, 16, 8],
+        [80, 16, 16, 8]
+    ]
+}

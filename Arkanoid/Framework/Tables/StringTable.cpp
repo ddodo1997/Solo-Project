@@ -8,6 +8,7 @@ bool StringTable::Load()
 	SetPath();
 	Release();
 	std::ifstream fStream(filePath);
+
 	if (!fStream.is_open())
 	{
 		std::cerr << "String Table File Open Error!!" << std::endl;
