@@ -3,6 +3,7 @@
 #include "Vause.h"
 #include "SceneGame.h"
 #include "TileMap.h"
+#include "Bricks.h"
 Ball::Ball(const std::string& name)
 	:GameObject(name)
 {
@@ -47,6 +48,7 @@ void Ball::Reset()
 {
 	SceneGame* sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 	vause = sceneGame->GetVause();
+	bricks = sceneGame->GetBricks();
 	direction = sf::Vector2f(0.f, 0.f);
 	speed = 0.f;
 	score = 0;
@@ -70,33 +72,29 @@ void Ball::Release()
 
 void Ball::Update(float dt)
 {
-	auto newPos = position + direction * speed * dt;
 
-	if (newPos.x < movableBounds.left)
+	if (position.x < movableBounds.left)
 	{
-		newPos.x = movableBounds.left;
+		position.x = movableBounds.left;
 		direction.x *= -1.f;
 	}
-	else if (newPos.x > movableBounds.width)
+	else if (position.x > movableBounds.width)
 	{
-		newPos.x = movableBounds.width;
+		position.x = movableBounds.width;
 		direction.x *= -1.f;
 	}
 
-	if (newPos.y < movableBounds.top)
+	if (position.y < movableBounds.top)
 	{
-		newPos.y = movableBounds.top;
+		position.y = movableBounds.top;
 		direction.y *= -1.f;
 	}
-	else if (newPos.y > movableBounds.height)
+	else if (position.y > movableBounds.height)
 	{
-		/*newPos.y = movableBounds.height;
-		direction.y *= -1.f;*/
 		isMoving = false;
 		vause->SetGameover(true);
 	}
 
-	SetPosition(newPos);
 	hitBox.UpdateTr(ball, ball.getGlobalBounds());
 }
 
@@ -115,10 +113,124 @@ void Ball::FixedUpdate(float dt)
 			}
 		}
 	}
+
+	for (auto& vec : bricks)
+	{
+		for (auto& brick : vec)
+		{
+			if (brick != nullptr && brick->IsActive())
+			{
+				auto brickBounds = brick->GetGlobalBounds();
+				if (ball.getGlobalBounds().intersects(brickBounds))
+				{
+					auto ballBounds = ball.getGlobalBounds();
+
+					auto brick6Points = Get6Points(brickBounds);
+					auto closetPoint = FindClosesPoint(ballBounds, brick6Points);
+
+					auto brickCenter = GetCenter(brickBounds);
+
+					//충돌 시 방향 반전
+					if (closetPoint.y != brickCenter.y)
+					{
+						if (closetPoint.y > brickCenter.y)
+						{
+							position.y = closetPoint.y + 20.f;
+						}
+						if (closetPoint.y < brickCenter.y)
+						{
+							position.y = closetPoint.y;
+						}
+
+						direction.y *= -1.f;
+					}
+					else
+					{
+						if (closetPoint.x > brickCenter.x)
+						{
+							position.x = closetPoint.x + 15.f;
+						}
+						if (closetPoint.x < brickCenter.x)
+						{
+							position.x = closetPoint.x - 5.f;
+						}
+
+						direction.x *= -1.f;
+					}
+					brick->OnHit();
+				}
+			}
+		}
+	}
+
+	SetPosition(position + direction * speed * dt);
 }
 
 void Ball::Draw(sf::RenderWindow& window)
 {
 	window.draw(ball);
 	hitBox.Draw(window);
+}
+
+std::vector<sf::Vector2f> Ball::Get6Points(const sf::FloatRect& bounds)
+{
+	std::vector<sf::Vector2f> result;
+
+
+	// 네 꼭짓점 구하기
+	sf::Vector2f topLeft = sf::Vector2f(bounds.left, bounds.top);
+	sf::Vector2f topRight = sf::Vector2f(bounds.left + bounds.width, bounds.top);
+	sf::Vector2f bottomLeft = sf::Vector2f(bounds.left, bounds.top + bounds.height);
+	sf::Vector2f bottomRight = sf::Vector2f(bounds.left + bounds.width, bounds.top + bounds.height);
+
+	// 가로를 3등분한 위치 계산
+	float thirdWidth = bounds.width * 0.3333f;
+
+	// 세로를 2등분한 위치 계산
+	float halfHeight = bounds.height * 0.5f;
+
+	// 6개 점 계산
+	result.push_back(sf::Vector2f(bounds.left + thirdWidth, bounds.top)); // 왼쪽 3분점 위
+	result.push_back(sf::Vector2f(bounds.left + thirdWidth * 2.f, bounds.top)); // 오른쪽 3분점 위
+	result.push_back(sf::Vector2f(bounds.left + thirdWidth, bounds.top + bounds.height)); // 왼쪽 3분점 아래
+	result.push_back(sf::Vector2f(bounds.left + thirdWidth * 2.f, bounds.top + bounds.height)); // 오른쪽 3분점 아래
+	result.push_back(sf::Vector2f(bounds.left, bounds.top + halfHeight)); // 왼쪽 세로 중점
+	result.push_back(sf::Vector2f(bounds.left + bounds.width, bounds.top + halfHeight)); // 오른쪽 세로 중점
+
+	// 0 1 2
+	// 3 4 5
+
+	return result;
+}
+
+// 가장 가까운 점 찾기
+sf::Vector2f Ball::FindClosesPoint(
+	const sf::FloatRect& ballBounds,
+	const std::vector<sf::Vector2f>& brickPoints)
+{
+	sf::Vector2f ballCenter = ballBounds.getPosition() + sf::Vector2f(ballBounds.width / 2.f, ballBounds.height / 2.f);
+
+	float minDistance = std::numeric_limits<float>::max();
+	sf::Vector2f closestPoint;
+
+	for (const auto& middle : brickPoints) {
+		float dist = Utils::Distance(ballCenter, middle);
+		if (dist < minDistance) {
+			minDistance = dist;
+			closestPoint = middle;
+		}
+	}
+
+	return closestPoint;
+}
+
+sf::Vector2f Ball::GetCenter(const sf::FloatRect& rect) {
+	// 직사각형의 네 꼭짓점 좌표
+	sf::Vector2f topLeft = sf::Vector2f(rect.left, rect.top);
+	sf::Vector2f bottomRight = sf::Vector2f(rect.left + rect.width, rect.top + rect.height);
+
+	// 중점 계산 (여기서는 중앙점만 계산)
+	sf::Vector2f center = (topLeft + bottomRight) * 0.5f;
+
+	return center;
 }

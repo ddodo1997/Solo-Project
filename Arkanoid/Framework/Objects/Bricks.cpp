@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bricks.h"
-
+#include "Item.h"
+#include "SceneGame.h"
 Bricks::Bricks(const std::string& name)
 	: GameObject(name)
 {
@@ -44,6 +45,7 @@ void Bricks::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
+	SetScale({ 4.f,4.f });
 }
 
 void Bricks::Release()
@@ -54,12 +56,10 @@ void Bricks::Reset()
 {
 	texture.loadFromFile(texId);
 	body.setTexture(texture);
-	SetScale({ 4.f,4.f });
 }
 
 void Bricks::Update(float dt)
 {
-	//TODO : ¹ÝÂ¦ÀÓ
 	if (animator)
 	{
 		animator.Update(dt);
@@ -88,10 +88,6 @@ void Bricks::Draw(sf::RenderWindow& window)
 	hitBox.Draw(window);
 }
 
-sf::FloatRect Bricks::GetLocalBounds() const
-{
-	return body.getLocalBounds();
-}
 
 void Bricks::SetType(Types type)
 {
@@ -224,5 +220,15 @@ void Bricks::SetType(Types type)
 		break;
 	}
 	}
+}
 
+void Bricks::OnHit()
+{
+	hp--;
+	if (hp <= 0)
+	{
+		SetActive(false);
+		
+		dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->SpawnItem(position);
+	}
 }

@@ -191,6 +191,7 @@
     <ClCompile Include="Framework\Objects\Text\UiInGame.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="StageTable.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +228,7 @@
     <ClInclude Include="Framework\Objects\Vause.h" />
     <ClInclude Include="Framework\Objects\Text\UiMain.h" />
     <ClInclude Include="Framework\Objects\Text\UiInGame.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="StageTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

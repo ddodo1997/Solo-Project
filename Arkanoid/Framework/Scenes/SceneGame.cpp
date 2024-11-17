@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "UiInGame.h"
 #include "Bricks.h"
+#include "Item.h"
 SceneGame::SceneGame() : Scene(SceneIds::Game)
 {
 
@@ -18,6 +19,7 @@ void SceneGame::Init()
 	uiInGame = AddGo(new UiInGame("UiInGame"));
 	InitBricks();
 
+	AddGo(new Item("Test"));
 
 
 	Scene::Init();
@@ -42,19 +44,25 @@ void SceneGame::InitBricks()
 
 void SceneGame::Enter()
 {
-	Scene::Enter();
+	SetStage("Stage1");
 	sf::Vector2f size = FRAMEWORK.GetWindowSizeF();
 	worldView.setSize(size);
 	worldView.setCenter(0.f, 0.f);
 
 	uiView.setSize(size);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
-
-	SetStage();
+	Scene::Enter();
 }
 
 void SceneGame::Exit()
 {
+	for (auto item : activeItems)
+	{
+		RemoveGo(item);
+		itemPool.Return(item);
+	}
+	activeItems.clear();
+
 	Scene::Exit();
 }
 
@@ -92,7 +100,7 @@ void SceneGame::Update(float dt)
 
 	if (InputMgr::GetKey(sf::Keyboard::X))
 	{
-		FRAMEWORK.SetTimeScale(0.3f);
+		FRAMEWORK.SetTimeScale(0.05f);
 	}
 	if (InputMgr::GetKeyUp(sf::Keyboard::X))
 	{
@@ -116,16 +124,35 @@ void SceneGame::UpdateUi()
 	uiInGame->SetHighScore(highScore);
 }
 
-void SceneGame::SetStage()
+void SceneGame::SetStage(const std::string& key)
 {
 	for (int i = 0; i < bricksSize.x; i++)
 	{
 		for (int j = 0; j < bricksSize.y; j++)
 		{
-			bricks[i][j]->SetType((Bricks::Types)STAGES_TABLE->Get("Stage1")[i][j]);
+			bricks[i][j]->SetType((Bricks::Types)STAGES_TABLE->Get(key)[i][j]);
 			auto size = bricks[i][j]->GetLocalBounds();
 			auto scale = bricks[i][j]->GetScale();
 			bricks[i][j]->SetPosition({ -320.f + j * size.width * scale.x, -400.f + i * size.height * scale.y });
 		}
 	}
+}
+
+void SceneGame::SpawnItem(const sf::Vector2f& position)
+{
+	Item* item = itemPool.Take();
+	activeItems.push_back(item);
+
+	Item::Types type = (Item::Types)Utils::RandomRange(0, Item::TotalTypes - 1);
+	item->SetType(type);
+	item->SetPosition(position);
+
+	AddGo(item);
+}
+
+void SceneGame::ReturnItem(Item* item)
+{
+	RemoveGo(item);
+	itemPool.Return(item);
+	activeItems.remove(item);
 }

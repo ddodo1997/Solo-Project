@@ -2,12 +2,22 @@
 #include "GameObject.h"
 class Vause;
 class SceneGame;
+class Bricks;
 class Ball :
     public GameObject
 {
+public:
+	struct CollisionInfo
+	{
+		Bricks* brick;
+		sf::Vector2f collisionPoint;
+		float distance;
+	};
+
 protected:
     sf::CircleShape ball;
 	float radius = 5.f;
+	sf::Vector2f ballCenter = { ball.getPosition().x , ball.getPosition().y - radius };
 
     sf::Vector2f direction;
     float speed = 0.f;
@@ -17,6 +27,9 @@ protected:
 
 	Vause* vause = nullptr;
 	bool isMoving = false;
+
+	SceneGame* sceneGame;
+	std::vector<std::vector<Bricks*>> bricks;
 public:
 	Ball(const std::string& name = "");
 	~Ball() = default;
@@ -44,5 +57,9 @@ public:
 
 	void SetScore(int score) { this->score = score; }
 	int GetScore()const { return score; }
+
+	std::vector<sf::Vector2f> Get6Points(const sf::FloatRect& bounds);
+	sf::Vector2f GetCenter(const sf::FloatRect& rect);
+	sf::Vector2f FindClosesPoint(const sf::FloatRect& ballBounds, const std::vector<sf::Vector2f>& brickMiddles);
 };
 
