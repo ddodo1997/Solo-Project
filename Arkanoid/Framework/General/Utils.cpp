@@ -36,6 +36,13 @@ sf::Vector2f Utils::RandomOnUnitCircle()
     return sf::Vector2f(std::cosf(angle), std::sinf(angle));
 }
 
+sf::Vector2f Utils::RandomOnUnitCircle(float angleLimit)
+{
+    float angle = RandomRange(PI / 4, 3 * PI / 4); 
+
+    return sf::Vector2f(std::cosf(angle), std::sinf(angle));
+}
+
 sf::Vector2f Utils::RandomInUnitCircle()
 {
     return RandomOnUnitCircle() * RandomValue();
@@ -256,4 +263,87 @@ bool Utils::PolygonsIntersect(const std::vector<sf::Vector2f>& polygonA, const s
         }
     }
     return true;
+}
+
+std::vector<sf::Vector2f> Utils::Get6Points(const sf::FloatRect& bounds)
+{
+    std::vector<sf::Vector2f> result;
+
+    sf::Vector2f topLeft = sf::Vector2f(bounds.left, bounds.top);
+    sf::Vector2f topRight = sf::Vector2f(bounds.left + bounds.width, bounds.top);
+    sf::Vector2f bottomLeft = sf::Vector2f(bounds.left, bounds.top + bounds.height);
+    sf::Vector2f bottomRight = sf::Vector2f(bounds.left + bounds.width, bounds.top + bounds.height);
+
+    float thirdWidth = bounds.width * 0.3333f;
+    float halfHeight = bounds.height * 0.5f;
+
+    result.push_back(sf::Vector2f(bounds.left + thirdWidth, bounds.top)); // 왼쪽 3분점 위
+    result.push_back(sf::Vector2f(bounds.left + thirdWidth * 2.f, bounds.top)); // 오른쪽 3분점 위
+    result.push_back(sf::Vector2f(bounds.left, bounds.top + halfHeight)); // 왼쪽 세로 중점
+    result.push_back(sf::Vector2f(bounds.left + bounds.width, bounds.top + halfHeight)); // 오른쪽 세로 중점
+    result.push_back(sf::Vector2f(bounds.left + thirdWidth, bounds.top + bounds.height)); // 왼쪽 3분점 아래
+    result.push_back(sf::Vector2f(bounds.left + thirdWidth * 2.f, bounds.top + bounds.height)); // 오른쪽 3분점 아래
+
+    //	0 1
+    // 2   3
+    //	4 5
+
+    return result;
+}
+
+std::vector<sf::Vector2f> Utils::GetUpperPoints(const sf::FloatRect& bounds)
+{
+    std::vector<sf::Vector2f> result;
+
+    sf::Vector2f topLeft = sf::Vector2f(bounds.left, bounds.top);
+    sf::Vector2f topRight = sf::Vector2f(bounds.left + bounds.width, bounds.top);
+
+    for (int i = 1; i < 10; i++)
+    {
+        result.push_back(Utils::Lerp(topLeft, topRight, 0.1 * i));
+    }
+
+    return result;
+}
+
+sf::Vector2f Utils::FindClosesPoint(const sf::FloatRect& srcBounds, const std::vector<sf::Vector2f>& targetBounds)
+{
+    sf::Vector2f ballCenter = srcBounds.getPosition() + sf::Vector2f(srcBounds.width / 2.f, srcBounds.height / 2.f);
+
+    float minDistance = std::numeric_limits<float>::max();
+    sf::Vector2f closestPoint;
+
+    for (const auto& middle : targetBounds) {
+        float dist = Utils::Distance(ballCenter, middle);
+        if (dist < minDistance) {
+            minDistance = dist;
+            closestPoint = middle;
+        }
+    }
+
+    return closestPoint;
+}
+
+sf::Vector2f Utils::GetCenter(const sf::FloatRect& rect) 
+{
+    sf::Vector2f topLeft = sf::Vector2f(rect.left, rect.top);
+    sf::Vector2f bottomRight = sf::Vector2f(rect.left + rect.width, rect.top + rect.height);
+
+    sf::Vector2f center = (topLeft + bottomRight) * 0.5f;
+
+    return center;
+}
+
+float Utils::GetRelativePosition(const sf::Vector2f& v1, const sf::Vector2f& v2, const sf::Vector2f& v3)
+{
+    sf::Vector2f direction = v2 - v1;
+    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+    sf::Vector2f toV3 = v3 - v1;
+    float projection = (toV3.x * direction.x + toV3.y * direction.y) / length;
+    if (projection < 0 || projection > length) {
+        return -1.0f;
+    }
+
+    return 2.0f * projection / length - 1.0f;
 }

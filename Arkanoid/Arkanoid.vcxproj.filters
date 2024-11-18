@@ -94,6 +94,9 @@
     <ClCompile Include="StageTable.cpp">
       <Filter>Framework\Tables</Filter>
     </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <Filter>Framework\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="StageTable.h">
       <Filter>Framework\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser.h">
+      <Filter>Framework\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

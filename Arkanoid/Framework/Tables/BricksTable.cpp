@@ -10,7 +10,7 @@ bool BricksTable::Load()
 
 	if (!fStream.is_open())
 	{
-		std::cerr << "String Table File Open Error!!" << std::endl;
+		std::cerr << "Bricks Table File Open Error!!" << std::endl;
 	}
 	json data = json::parse(fStream);
 

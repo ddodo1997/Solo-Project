@@ -68,10 +68,10 @@ void TileMap::Release()
 void TileMap::Reset()
 {
 	texture = &TEXTURE_MGR.Get(texTileMapId);
-	SetBackGround({ 20,30 }, { 32.f,32.f });
-	SetSideLine({ 1,24 }, { 8.f,40.f });
+	SetBackGround({ 20,35 }, { 32.f,32.f });
+	SetSideLine({ 1,30 }, { 8.f,40.f });
 	SetUpperLine({ 20,1 }, { 32.f,8.f });
-	SetPosition({ 0.f,0.f });
+	SetPosition({ 0.f,50.f });
 	SetRotation(0.f);
 	SetScale({ 1.f,1.f });
 	SetOrigin(Origins::MC);

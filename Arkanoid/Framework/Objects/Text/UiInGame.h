@@ -5,6 +5,9 @@ class UiInGame : public GameObject
 protected:
 	sf::Text txtscore;
 	sf::Text txthighScore;
+
+	sf::Sprite extraLifeSprite;
+	sf::Text extraLifeText;
 public:
 	UiInGame(const std::string& name = "");
 	~UiInGame() = default;
@@ -24,4 +27,5 @@ public:
 
 	void SetScore(int score);
 	void SetHighScore(int highScore);
+	void SetExtraLife(int life);
 };

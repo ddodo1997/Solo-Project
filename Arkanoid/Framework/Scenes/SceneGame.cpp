@@ -6,6 +6,7 @@
 #include "UiInGame.h"
 #include "Bricks.h"
 #include "Item.h"
+#include "Laser.h"
 SceneGame::SceneGame() : Scene(SceneIds::Game)
 {
 
@@ -15,12 +16,12 @@ void SceneGame::Init()
 {
 	tileMap = AddGo(new TileMap("TileMap"));
 	vause = AddGo(new Vause("Vause"));
-	ball = AddGo(new Ball("Ball"));
+	for (int i = 0; i < 2; i++)
+	{
+		lasers.push_back(AddGo(new Laser("Laser")));
+	}
 	uiInGame = AddGo(new UiInGame("UiInGame"));
 	InitBricks();
-
-	AddGo(new Item("Test"));
-
 
 	Scene::Init();
 }
@@ -37,7 +38,6 @@ void SceneGame::InitBricks()
 		for (int j = 0; j < bricksSize.y; j++)
 		{
 			bricks[i][j] = AddGo(new Bricks("Bricks"));
-			//bricks[i][j]->SetActive(false);
 		}
 	}
 }
@@ -51,7 +51,11 @@ void SceneGame::Enter()
 
 	uiView.setSize(size);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
+
+
 	Scene::Enter();
+
+	mainBall = SpawnBall(vause->GetPosition());
 }
 
 void SceneGame::Exit()
@@ -62,6 +66,13 @@ void SceneGame::Exit()
 		itemPool.Return(item);
 	}
 	activeItems.clear();
+
+	for (auto ball : activeBalls)
+	{
+		RemoveGo(ball);
+		ballsPool.Return(ball);
+	}
+	activeBalls.clear();
 
 	Scene::Exit();
 }
@@ -75,18 +86,16 @@ void SceneGame::Update(float dt)
 		std::cout << "Gameover!!" << std::endl;
 	}
 
-	if (!ball->isMove())
-	{
-		ball->SetPosition(vause->GetPosition());
+	//TODO : 공의 isMoving 상태에 따라 바우스를 따라가도록
 
+	if (!mainBall->isMove())
+	{
+		mainBall->SetPosition(vause->GetPosition());
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
-			ball->Fire({ 1.f,-1.f }, 500.f);
+			mainBall->Fire({ 1.f,-1.f }, 500.f);
 		}
 	}
-
-
-
 
 	///배속 코드
 	if (InputMgr::GetKey(sf::Keyboard::Z))
@@ -122,6 +131,7 @@ void SceneGame::UpdateUi()
 {
 	uiInGame->SetScore(score);
 	uiInGame->SetHighScore(highScore);
+	uiInGame->SetExtraLife(vause->GetExtraLife());
 }
 
 void SceneGame::SetStage(const std::string& key)
@@ -143,7 +153,28 @@ void SceneGame::SpawnItem(const sf::Vector2f& position)
 	Item* item = itemPool.Take();
 	activeItems.push_back(item);
 
-	Item::Types type = (Item::Types)Utils::RandomRange(0, Item::TotalTypes - 1);
+	int rand = Utils::RandomRange(0, 1000);
+	int cnt = 0;
+	int weight = 0;
+	//
+	// None,
+	// Slow,
+	// Laser,
+	// Enlarge,
+	// Disruption,
+	// Player
+	int percentage[6] = { 750,100,50,50,20,30 };
+	for (int i = 0; i < Item::TotalTypes; i++)
+	{
+		if (weight + percentage[i] > rand)
+		{
+			break;
+		}
+		weight += percentage[i];
+		cnt++;
+	}
+
+	Item::Types type = (Item::Types)cnt;
 	item->SetType(type);
 	item->SetPosition(position);
 
@@ -155,4 +186,22 @@ void SceneGame::ReturnItem(Item* item)
 	RemoveGo(item);
 	itemPool.Return(item);
 	activeItems.remove(item);
+}
+
+Ball* SceneGame::SpawnBall(const sf::Vector2f& position, bool isMoving)
+{
+	Ball* ball = ballsPool.Take();
+	activeBalls.push_back(ball);
+
+	ball->SetMove(isMoving);
+
+	ball->SetPosition(position);
+	return AddGo(ball);
+}
+
+void SceneGame::ReturnBall(Ball* ball)
+{
+	RemoveGo(ball);
+	ballsPool.Return(ball);
+	activeBalls.remove(ball);
 }

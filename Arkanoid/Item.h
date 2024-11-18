@@ -5,8 +5,8 @@ class Item : public GameObject
 public:
 	enum class Types
 	{
+		None,
 		Slow,
-		Catch,
 		Laser,
 		Enlarge,
 		Disruption,
@@ -17,6 +17,7 @@ protected:
 	sf::Sprite body;
 	Types currentType;
 	std::string texId = "graphics/Arcade - Arkanoid - Powerups.png";
+
 
 	sf::Texture texture;
 	Animator animator;
@@ -33,6 +34,10 @@ public:
 
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(const sf::Vector2f& newOrigin) override;
+
+
+	sf::FloatRect GetLocalBounds()const override;
+	sf::FloatRect GetGlobalBounds()const override;
 
 	void Init() override;
 	void Release() override;

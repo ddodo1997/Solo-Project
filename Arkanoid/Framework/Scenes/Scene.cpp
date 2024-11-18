@@ -46,6 +46,10 @@ void Scene::Exit()
 	TEXTURE_MGR.UnloadAll();
 	FONT_MGR.UnloadAll();
 	SOUNDBUFFER_MGR.UnloadAll();
+
+	SaveDataVC data;
+	data.highScore = highScore;
+	SAVELOAD_MGR.Save(data);
 }
 
 void Scene::Update(float dt)

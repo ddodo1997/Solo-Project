@@ -40,6 +40,16 @@ void Item::SetOrigin(const sf::Vector2f& newOrigin)
 	body.setOrigin(origin);
 }
 
+sf::FloatRect Item::GetLocalBounds() const
+{
+	return body.getLocalBounds();
+}
+
+sf::FloatRect Item::GetGlobalBounds() const
+{
+	return body.getGlobalBounds();
+}
+
 void Item::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
@@ -83,11 +93,11 @@ void Item::SetType(Types type)
 	currentType = type;
 	switch (currentType)
 	{
+	case Item::Types::None:
+		SetActive(false);
+		return;
 	case Item::Types::Slow:
 		animator.Play("animations/item_slow.json");
-		break;
-	case Item::Types::Catch:
-		animator.Play("animations/item_catch.json");
 		break;
 	case Item::Types::Laser:
 		animator.Play("animations/item_laser.json");

@@ -10,10 +10,10 @@ bool StageTable::Load()
 
 	if (!fStream.is_open())
 	{
-		std::cerr << "String Table File Open Error!!" << std::endl;
+		std::cerr << "Stage Table File Open Error!!" << std::endl;
 	}
 	json data = json::parse(fStream);
-	std::cout << data.dump(4) << std::endl;
+
 	for (const auto& map : data.items())
 	{
 		table.insert({ map.key(), map.value() });

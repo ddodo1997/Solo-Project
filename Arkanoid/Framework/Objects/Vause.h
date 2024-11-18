@@ -1,9 +1,22 @@
 #pragma once
+#include "Item.h"
+#include "Laser.h"
 class SceneGame;
+class Ball;
 class Vause : public GameObject
 {
+public:
+	enum class Status
+	{
+		Normal,
+		Enlarge,
+		Laser,
+	};
 protected:
 	sf::Sprite body;
+	std::vector<Laser*> lasers;
+	Status currentStatus = Status::Normal;
+	Status prevStatus;
 	Animator animator;
 
 	sf::Vector2f direction;
@@ -14,9 +27,16 @@ protected:
 	float minX = 0.f;
 	float maxX = 0.f;
 	int life = 3;
+	bool isLaser = false;
 	bool isGameover = false;
 
 	SceneGame* sceneGame;
+
+	float enlargeTimer = 0.f;
+	float enlargeDelay = 10.f;
+
+	float laserTimer = 0.f;
+	float laserDelay = 10.f;
 public:
 	Vause(const std::string& name = "");
 	~Vause() = default;
@@ -28,16 +48,26 @@ public:
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(const sf::Vector2f& newOrigin) override;
 
+	sf::FloatRect GetLocalBounds()const  override;
+	sf::FloatRect GetGlobalBounds()const override;
+
 	void ChangeAni(const std::string& id, const std::string& nextId = "");
 
 	void Init() override;
 	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
+
+	void UpdateEnlarge(float dt);
+	void UpdateLaser(float dt);
+
+	void SetStatus(Status stat);
+
+	void FixedUpdate(float dt)override;
 	void Draw(sf::RenderWindow& window) override;
 
 	bool IsGameover() const { return isGameover; }
-	void SetGameover(bool isGameover) { 
+	void SetGameover(bool isGameover) {
 		if (life > 0)
 		{
 			life--;
@@ -46,4 +76,7 @@ public:
 		this->isGameover = isGameover;
 	}
 	sf::FloatRect GetBatBounds() { return body.getGlobalBounds(); }
+	int GetExtraLife() const { return life; }
+
+	void OnPickupItem(Item::Types type);
 };

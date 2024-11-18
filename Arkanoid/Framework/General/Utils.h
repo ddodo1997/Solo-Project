@@ -13,6 +13,7 @@ public:
 	static float RandomRange(float min, float max);
 	static float RandomValue();	// 0.0f ~ 1.0f
 	static sf::Vector2f RandomOnUnitCircle();
+	static sf::Vector2f RandomOnUnitCircle(float angleLimit);
 	static sf::Vector2f RandomInUnitCircle();
 	static sf::Color RandomColor(bool opaque = true);
 
@@ -54,6 +55,11 @@ public:
 	static std::vector<sf::Vector2f> GetRectanglePointsFromBounds(const sf::FloatRect& localBounds);
 	static bool PolygonsIntersect(const std::vector<sf::Vector2f>& polygonA, const sf::Transform& transformA, const std::vector<sf::Vector2f>& polygonB, const sf::Transform& transformB);
 
+	static std::vector<sf::Vector2f> Get6Points(const sf::FloatRect& bounds);
+	static std::vector<sf::Vector2f> GetUpperPoints(const sf::FloatRect& bounds);
 
+	static sf::Vector2f FindClosesPoint(const sf::FloatRect& srcBounds, const std::vector<sf::Vector2f>& targetPoints);
+	static sf::Vector2f GetCenter(const sf::FloatRect& rect);
+	static float GetRelativePosition(const sf::Vector2f& v1, const sf::Vector2f& v2, const sf::Vector2f& v3);
 };
 

@@ -23,13 +23,16 @@ protected:
     float speed = 0.f;
 
 	sf::FloatRect movableBounds;
-	int score = 0;
 
 	Vause* vause = nullptr;
 	bool isMoving = false;
+	bool isSlow = false;
 
 	SceneGame* sceneGame;
 	std::vector<std::vector<Bricks*>> bricks;
+
+	float slowTimer = 0.f;
+	float slowDelay = 10.f;
 public:
 	Ball(const std::string& name = "");
 	~Ball() = default;
@@ -54,12 +57,12 @@ public:
 
 	void SetBat(Vause* bat) { this->vause = bat; }
 	bool isMove() const { return isMoving; }
+	bool IsSlow() const { return isSlow; }
+	void SetMove(bool isMoving) { this->isMoving = isMoving; }
 
-	void SetScore(int score) { this->score = score; }
-	int GetScore()const { return score; }
+	float GetSlowTimer() const { return slowTimer; }
+	void SetSlowTimer(float t) { slowTimer = t; }
 
-	std::vector<sf::Vector2f> Get6Points(const sf::FloatRect& bounds);
-	sf::Vector2f GetCenter(const sf::FloatRect& rect);
-	sf::Vector2f FindClosesPoint(const sf::FloatRect& ballBounds, const std::vector<sf::Vector2f>& brickMiddles);
+	void SetSlow();
 };
 

@@ -59,6 +59,15 @@ void UiInGame::Reset()
 	txtscore.setFont(font);
 	txtscore.setPosition({ size.x * 0.25f, 0.f });
 	txtscore.setCharacterSize(50);
+
+	
+	extraLifeSprite.setTexture(TEXTURE_MGR.Get("graphics/vause_sheet.png"));
+	extraLifeSprite.setTextureRect({ 176,0,32,8 });
+	extraLifeSprite.setPosition(size.x * 0.26f, size.y * 0.94f);
+	extraLifeSprite.setScale({ 2.f, 2.f });
+
+	extraLifeText.setFont(font);
+	extraLifeText.setPosition(size.x * 0.3f, size.y * 0.93f);
 }
 
 void UiInGame::Update(float dt)
@@ -69,6 +78,8 @@ void UiInGame::Draw(sf::RenderWindow& window)
 {
 	window.draw(txtscore);
 	window.draw(txthighScore);
+	window.draw(extraLifeSprite);
+	window.draw(extraLifeText);
 }
 
 void UiInGame::SetScore(int score)
@@ -81,4 +92,12 @@ void UiInGame::SetHighScore(int highScore)
 {
 	txthighScore.setString(STRING_TABLE->Get("HighScore") + std::to_string(highScore));
 	Utils::SetOrigin(txthighScore, Origins::TC);
+}
+
+void UiInGame::SetExtraLife(int life)
+{
+	auto size = FRAMEWORK.GetWindowSizeF();
+	extraLifeText.setString("X " + std::to_string(life));
+	Utils::SetOrigin(extraLifeSprite, Origins::BC);
+	Utils::SetOrigin(extraLifeText, Origins::BC);
 }
