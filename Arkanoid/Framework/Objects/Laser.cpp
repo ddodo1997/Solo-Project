@@ -96,6 +96,7 @@ void Laser::FixedUpdate(float dt)
 					brick->OnHit();
 					SetActive(false);
 					isFire = false;
+					break;
 				}
 			}
 		}
@@ -111,6 +112,7 @@ void Laser::Fire(const sf::Vector2f& position, float s)
 {
 	if (isFire)
 		return;
+	SOUND_MGR.PlaySfx("sounds/Arkanoid_laser.wav");
 	SetPosition(position);
 	speed = s;
 	SetActive(true);

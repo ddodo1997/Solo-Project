@@ -15,8 +15,8 @@ void Scene::Init()
 	{
 		obj->Init();
 	}
-
-	highScore = SAVELOAD_MGR.Load().highScore;
+	normalHighScore = SAVELOAD_MGR.Load().normalHighScore;
+	infinityHighScore = SAVELOAD_MGR.Load().infinityHighScore;
 }
 
 void Scene::Release()
@@ -48,7 +48,8 @@ void Scene::Exit()
 	SOUNDBUFFER_MGR.UnloadAll();
 
 	SaveDataVC data;
-	data.highScore = highScore;
+	data.normalHighScore = normalHighScore;
+	data.infinityHighScore = infinityHighScore;
 	SAVELOAD_MGR.Save(data);
 }
 

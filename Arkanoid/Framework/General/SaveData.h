@@ -12,10 +12,10 @@ class SaveDataV1 : public SaveData
 public:
 	SaveDataV1() { version = 1; }
 
-	int highScore = 0;
-
+	int infinityHighScore = 0;
+	int normalHighScore = 0;
 	SaveData* VersionUp() override { return nullptr; }
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(SaveDataV1, version, highScore);
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(SaveDataV1, version, normalHighScore, infinityHighScore);
 };
 
 

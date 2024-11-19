@@ -33,7 +33,7 @@ public:
 	sf::RenderWindow& GetWindow() { return window; }
 	
 	sf::Vector2u GetWindowSize() const { return window.getSize(); }
-	sf::Vector2f GetWindowSizeF() const { return (sf::Vector2f)window.getSize(); }
+	sf::Vector2f GetWindowSizeF() const { return { 1920.f,1080.f }; }
 	sf::FloatRect GetWindowBounds() const
 	{
 		auto size = GetWindowSizeF();

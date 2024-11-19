@@ -191,9 +191,12 @@
     <ClCompile Include="Framework\Objects\Text\UiInGame.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Laser.cpp" />
-    <ClCompile Include="StageTable.cpp" />
+    <ClCompile Include="Framework\Objects\Item.cpp" />
+    <ClCompile Include="Framework\Objects\Laser.cpp" />
+    <ClCompile Include="Framework\Tables\StageTable.cpp" />
+    <ClCompile Include="Framework\Objects\Text\UiCenter.cpp" />
+    <ClCompile Include="SceneInfinity.cpp" />
+    <ClCompile Include="SceneNormalGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Objects\Bricks.h" />
@@ -229,9 +232,12 @@
     <ClInclude Include="Framework\Objects\Vause.h" />
     <ClInclude Include="Framework\Objects\Text\UiMain.h" />
     <ClInclude Include="Framework\Objects\Text\UiInGame.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Laser.h" />
-    <ClInclude Include="StageTable.h" />
+    <ClInclude Include="Framework\Objects\Item.h" />
+    <ClInclude Include="Framework\Objects\Laser.h" />
+    <ClInclude Include="Framework\Tables\StageTable.h" />
+    <ClInclude Include="Framework\Objects\Text\UiCenter.h" />
+    <ClInclude Include="SceneInfinity.h" />
+    <ClInclude Include="SceneNormalGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

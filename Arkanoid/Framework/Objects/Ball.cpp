@@ -72,6 +72,7 @@ void Ball::Release()
 
 void Ball::Update(float dt)
 {
+
 	if (isSlow)
 	{
 		slowTimer += dt;
@@ -79,6 +80,7 @@ void Ball::Update(float dt)
 		{
 			speed = 500.f;
 			slowTimer = 0.f;
+			isSlow = false;
 		}
 	}
 
@@ -103,8 +105,11 @@ void Ball::Update(float dt)
 		sceneGame->ReturnBall(this);
 		if (sceneGame->GetActiveBall().empty())
 		{
-			sceneGame->GetMainBall() = sceneGame->SpawnBall(vause->GetPosition(), false);
 			vause->SetGameover(true);
+			if (vause->IsGameover())
+				return;
+			sceneGame->GetMainBall() = sceneGame->SpawnBall(vause->GetPosition(), false);
+			
 		}
 	}
 
@@ -113,11 +118,16 @@ void Ball::Update(float dt)
 
 void Ball::FixedUpdate(float dt)
 {
+	//if (sceneGame->isStageClear())
+	//{
+	//	return;
+	//}
 	if (vause != nullptr)
 	{
 		auto vauseBounds = vause->GetBatBounds();
 		if (ball.getGlobalBounds().intersects(vauseBounds))
 		{
+			SOUND_MGR.PlaySfx("sounds/Arkanoid_vause.wav");
 			auto vauseUpperPoints = Utils::GetUpperPoints(vauseBounds);
 			auto closetPoint = Utils::FindClosesPoint(ball.getGlobalBounds(), vauseUpperPoints);
 
@@ -204,5 +214,5 @@ void Ball::Draw(sf::RenderWindow& window)
 void Ball::SetSlow()
 {
 	isSlow = true;
-	speed = 100.f;
+	speed = 300.f;
 }

@@ -45,7 +45,6 @@ void Bricks::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
-	SetScale({ 4.f,4.f });
 }
 
 void Bricks::Release()
@@ -56,6 +55,18 @@ void Bricks::Reset()
 {
 	texture.loadFromFile(texId);
 	body.setTexture(texture);
+	SetScale({ 4.f,4.f });
+
+	switch (currentType)
+	{
+	case Types::None:
+	case Types::Super:
+	case Types::Immotal:
+		isBroken = true;
+		break;
+	default :
+		isBroken = false;
+	}
 }
 
 void Bricks::Update(float dt)
@@ -63,20 +74,6 @@ void Bricks::Update(float dt)
 	if (animator)
 	{
 		animator.Update(dt);
-		flickeringTimer += dt;
-		if (flickeringDelay < flickeringTimer)
-		{
-			switch (currentType)
-			{
-			case Types::Super:
-				animator.Play("animations/super_brick.json");
-				break;
-			case Types::Immotal:
-				animator.Play("animations/immotal_brick.json");
-				break;
-			}
-			flickeringTimer = 0.f;
-		}
 	}
 
 	hitBox.UpdateTr(body, body.getLocalBounds());
@@ -91,12 +88,15 @@ void Bricks::Draw(sf::RenderWindow& window)
 
 void Bricks::SetType(Types type)
 {
+	animator.SetTarget(nullptr);
 	currentType = type;
-
+	isBroken = false;
 	switch (currentType)
 	{
 	case Types::None:
 		SetActive(false);
+		isBroken = true;
+		return;
 	case Types::White:
 	{
 		auto& data = BRICKS_TABLE->Get("White");
@@ -208,6 +208,7 @@ void Bricks::SetType(Types type)
 		hp = data.at("HP")[0];
 		animator.SetTarget(&body);
 		animator.Play("animations/super_brick.json");
+		isBroken = true;
 		break;
 	}
 	case Types::Immotal:
@@ -217,18 +218,36 @@ void Bricks::SetType(Types type)
 		hp = data.at("HP")[0];
 		animator.SetTarget(&body);
 		animator.Play("animations/immotal_brick.json");
+		isBroken = true;
 		break;
 	}
 	}
+	SetActive(true);
 }
 
 void Bricks::OnHit()
 {
+	if(animator)
+	{
+		switch (currentType)
+		{
+		case Types::Super:
+			animator.Play("animations/super_brick.json");
+			break;
+		case Types::Immotal:
+			animator.Play("animations/immotal_brick.json");
+			break;
+		}
+		SOUND_MGR.PlaySfx("sounds/Arkanoid_super_brick.wav");
+	}
+	else {
+		SOUND_MGR.PlaySfx("sounds/Arkanoid_brick.wav");
+	}
 	hp--;
 	if (hp <= 0)
 	{
 		SetActive(false);
-		
+		isBroken = true;
 		dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->SpawnItem(position);
 		dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->AddScore(score);
 	}

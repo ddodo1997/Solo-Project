@@ -25,11 +25,9 @@ protected:
 	int score = 0;
 	int hp = 0;
 
-	float flickeringTimer = 0.f;
-	float flickeringDelay = 3.f;
-
 	Animator animator;
 
+	bool isBroken = false;
 public:
 	Bricks(const std::string& name = "");
 	~Bricks() = default;
@@ -53,4 +51,6 @@ public:
 	void SetType(Types type);
 
 	void OnHit();
+
+	bool IsBroken() const { return isBroken; }
 };

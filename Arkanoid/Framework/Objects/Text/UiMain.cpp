@@ -56,7 +56,7 @@ void UiMain::Reset()
 	txtExit.setFont(otherFont);
 	txtArrow.setFont(otherFont);
 
-	txthighScore.setString(STRING_TABLE->Get("HighScore") + std::to_string(SAVELOAD_MGR.Load().highScore));
+	txthighScore.setString(STRING_TABLE->Get("HighScore"));
 	txthighScore.setCharacterSize(50);
 	Utils::SetOrigin(txthighScore, Origins::TC);
 	txthighScore.setPosition({ size.x * 0.5f,0.f });
@@ -103,7 +103,7 @@ void UiMain::Update(float dt)
 		switch (currentSelect)
 		{
 		case Select::Play:
-			SCENE_MGR.ChangeScene(SceneIds::Game);
+			SCENE_MGR.ChangeScene(SceneIds::NormalGame);
 			break;
 		case Select::Exit:
 			FRAMEWORK.GetWindow().close();

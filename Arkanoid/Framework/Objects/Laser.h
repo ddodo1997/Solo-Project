@@ -42,4 +42,5 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void Fire(const sf::Vector2f& position, float s);
+	void SetFire(bool isFire) { this->isFire = isFire; }
 };

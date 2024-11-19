@@ -7,7 +7,8 @@
 #include "Bricks.h"
 #include "Item.h"
 #include "Laser.h"
-SceneGame::SceneGame() : Scene(SceneIds::Game)
+#include "UiCenter.h"
+SceneGame::SceneGame(SceneIds id) : Scene(id)
 {
 
 }
@@ -21,59 +22,31 @@ void SceneGame::Init()
 		lasers.push_back(AddGo(new Laser("Laser")));
 	}
 	uiInGame = AddGo(new UiInGame("UiInGame"));
-	InitBricks();
+	uiCenter = AddGo(new UiCenter("UiCenter"));
 
 	Scene::Init();
 }
 
-void SceneGame::InitBricks()
-{
-	bricks.resize(bricksSize.x);
-	for (int i = 0; i < bricksSize.x; i++)
-	{
-		bricks[i].resize(bricksSize.y);
-	}
-	for (int i = 0; i < bricksSize.x; i++)
-	{
-		for (int j = 0; j < bricksSize.y; j++)
-		{
-			bricks[i][j] = AddGo(new Bricks("Bricks"));
-		}
-	}
-}
+
 
 void SceneGame::Enter()
 {
-	SetStage("Stage1");
-	sf::Vector2f size = FRAMEWORK.GetWindowSizeF();
-	worldView.setSize(size);
-	worldView.setCenter(0.f, 0.f);
-
-	uiView.setSize(size);
-	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
-
-
 	Scene::Enter();
 
-	mainBall = SpawnBall(vause->GetPosition());
+	SOUND_MGR.PlayBgm("sounds/resources_musics_evolution_sphere.ogg");
+
+	worldView.setSize(windowSize);
+	worldView.setCenter(0.f, 0.f);
+
+	uiView.setSize(windowSize);
+	uiView.setCenter(windowSize.x * 0.5f, windowSize.y * 0.5f);
+
+	score = 0;
 }
 
 void SceneGame::Exit()
 {
-	for (auto item : activeItems)
-	{
-		RemoveGo(item);
-		itemPool.Return(item);
-	}
-	activeItems.clear();
-
-	for (auto ball : activeBalls)
-	{
-		RemoveGo(ball);
-		ballsPool.Return(ball);
-	}
-	activeBalls.clear();
-
+	ReturnAllObj();
 	Scene::Exit();
 }
 
@@ -81,12 +54,11 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
 	UpdateUi();
-	if (vause->IsGameover())
-	{
-		std::cout << "Gameover!!" << std::endl;
-	}
 
-	//TODO : 공의 isMoving 상태에 따라 바우스를 따라가도록
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
+		SCENE_MGR.ChangeScene(SceneIds::Main);
+	}
 
 	if (!mainBall->isMove())
 	{
@@ -120,6 +92,7 @@ void SceneGame::Update(float dt)
 	{
 		Variables::isDrawHitBox = !Variables::isDrawHitBox;
 	}
+
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -130,23 +103,10 @@ void SceneGame::Draw(sf::RenderWindow& window)
 void SceneGame::UpdateUi()
 {
 	uiInGame->SetScore(score);
-	uiInGame->SetHighScore(highScore);
 	uiInGame->SetExtraLife(vause->GetExtraLife());
 }
 
-void SceneGame::SetStage(const std::string& key)
-{
-	for (int i = 0; i < bricksSize.x; i++)
-	{
-		for (int j = 0; j < bricksSize.y; j++)
-		{
-			bricks[i][j]->SetType((Bricks::Types)STAGES_TABLE->Get(key)[i][j]);
-			auto size = bricks[i][j]->GetLocalBounds();
-			auto scale = bricks[i][j]->GetScale();
-			bricks[i][j]->SetPosition({ -320.f + j * size.width * scale.x, -400.f + i * size.height * scale.y });
-		}
-	}
-}
+
 
 void SceneGame::SpawnItem(const sf::Vector2f& position)
 {
@@ -156,17 +116,11 @@ void SceneGame::SpawnItem(const sf::Vector2f& position)
 	int rand = Utils::RandomRange(0, 1000);
 	int cnt = 0;
 	int weight = 0;
-	//
-	// None,
-	// Slow,
-	// Laser,
-	// Enlarge,
-	// Disruption,
-	// Player
-	int percentage[6] = { 750,100,50,50,20,30 };
+
+	int percentage[6] = { 750,100,50,50,25,25 };
 	for (int i = 0; i < Item::TotalTypes; i++)
 	{
-		if (weight + percentage[i] > rand)
+		if (weight + percentage[i] >= rand)
 		{
 			break;
 		}
@@ -176,6 +130,7 @@ void SceneGame::SpawnItem(const sf::Vector2f& position)
 
 	Item::Types type = (Item::Types)cnt;
 	item->SetType(type);
+	//item->SetType(Item::Types::Laser);
 	item->SetPosition(position);
 
 	AddGo(item);
@@ -204,4 +159,21 @@ void SceneGame::ReturnBall(Ball* ball)
 	RemoveGo(ball);
 	ballsPool.Return(ball);
 	activeBalls.remove(ball);
+}
+
+void SceneGame::ReturnAllObj()
+{
+	for (auto item : activeItems)
+	{
+		RemoveGo(item);
+		itemPool.Return(item);
+	}
+	activeItems.clear();
+
+	for (auto ball : activeBalls)
+	{
+		RemoveGo(ball);
+		ballsPool.Return(ball);
+	}
+	activeBalls.clear();
 }

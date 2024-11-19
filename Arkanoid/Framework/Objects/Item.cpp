@@ -111,8 +111,6 @@ void Item::SetType(Types type)
 	case Item::Types::Player:
 		animator.Play("animations/item_player.json");
 		break;
-	default:
-		break;
 	}
 	SetActive(true);
 }

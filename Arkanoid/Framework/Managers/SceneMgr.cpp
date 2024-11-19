@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
 #include "SceneMain.h"
-#include "SceneGame.h"
+#include "SceneNormalGame.h"
+#include "SceneInfinity.h"
 
 void SceneMgr::Init()
 {
 	scenes.push_back(new SceneMain());
-	scenes.push_back(new SceneGame());
+	scenes.push_back(new SceneNormalGame());
+	scenes.push_back(new SceneInfinity());
 
 	for (auto scene : scenes)
 	{

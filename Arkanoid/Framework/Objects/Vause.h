@@ -11,6 +11,7 @@ public:
 		Normal,
 		Enlarge,
 		Laser,
+		GameOver,
 	};
 protected:
 	sf::Sprite body;
@@ -28,7 +29,6 @@ protected:
 	float maxX = 0.f;
 	int life = 3;
 	bool isLaser = false;
-	bool isGameover = false;
 
 	SceneGame* sceneGame;
 
@@ -66,14 +66,17 @@ public:
 	void FixedUpdate(float dt)override;
 	void Draw(sf::RenderWindow& window) override;
 
-	bool IsGameover() const { return isGameover; }
+	bool IsGameover() const { return currentStatus == Status::GameOver ? true : false; }
 	void SetGameover(bool isGameover) {
 		if (life > 0)
 		{
 			life--;
+			SOUND_MGR.PlaySfx("sounds/Arkanoid_lostball.wav");
 			return;
 		}
-		this->isGameover = isGameover;
+		SOUND_MGR.PlaySfx("sounds/Arkanoid_gameover.wav");
+		SOUND_MGR.StopBgm();
+		SetStatus(Status::GameOver);
 	}
 	sf::FloatRect GetBatBounds() { return body.getGlobalBounds(); }
 	int GetExtraLife() const { return life; }

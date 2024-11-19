@@ -89,7 +89,8 @@ void Vause::Reset()
 	Utils::SetOrigin(body, Origins::TC);
 	SetPosition({ 0.f,400.f });
 
-	isGameover = false;
+	life = 3;
+	currentStatus = Status::Normal;
 	enlargeTimer = 0.f;
 	laserTimer = 0.f;
 	lasers = sceneGame->GetLaser();
@@ -97,12 +98,31 @@ void Vause::Reset()
 
 void Vause::Update(float dt)
 {
-	direction.x = InputMgr::GetAxis(Axis::Horizontal);
-
+	animator.Update(dt);
+	if (currentStatus == Status::GameOver)
+		return;
+	
+	if (InputMgr::GetKey(sf::Keyboard::D) || InputMgr::GetKey(sf::Keyboard::Right))
+	{
+		direction.x = 1.f;
+	}
+	else if (InputMgr::GetKeyUp(sf::Keyboard::D) || InputMgr::GetKeyUp(sf::Keyboard::Right))
+	{
+		direction.x = 0.f;
+	}
+	if (InputMgr::GetKey(sf::Keyboard::A) || InputMgr::GetKey(sf::Keyboard::Left))
+	{
+		direction.x = -1.f;
+	}
+	else if (InputMgr::GetKeyUp(sf::Keyboard::A) || InputMgr::GetKeyUp(sf::Keyboard::Left))
+	{
+		direction.x = 0.f;
+	}
 	auto newPos = position + direction * speed * dt;
 	newPos.x = Utils::Clamp(newPos.x, minX, maxX);
 
 	SetPosition(newPos);
+
 
 	switch (currentStatus)
 	{
@@ -114,7 +134,6 @@ void Vause::Update(float dt)
 		break;
 	}
 
-	animator.Update(dt);
 	hitBox.UpdateTr(body, body.getLocalBounds());
 }
 
@@ -140,8 +159,7 @@ void Vause::UpdateLaser(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space) && sceneGame->GetMainBall()->isMove())
 	{
 		auto vauseBounds = GetGlobalBounds();
-
-		lasers[(int)Laser::Direction::Left]->Fire({vauseBounds.left, vauseBounds.top},600.f);
+ 		lasers[(int)Laser::Direction::Left]->Fire({vauseBounds.left, vauseBounds.top},600.f);
 		lasers[(int)Laser::Direction::Right]->Fire({vauseBounds.width + vauseBounds.left, vauseBounds.top }, 600.f);
 	}
 }
@@ -157,6 +175,11 @@ void Vause::SetStatus(Status stat)
 	case Status::Normal:
 		if (prevStatus != Status::Normal)
 			ChangeAni("animations/vause_idle.json");
+		for (auto laser : lasers)
+		{
+			laser->SetActive(false);
+			laser->SetFire(false);
+		}
 		break;
 	case Status::Laser:
 		if (prevStatus != Status::Laser)
@@ -165,6 +188,10 @@ void Vause::SetStatus(Status stat)
 	case Status::Enlarge:
 		if (prevStatus != Status::Enlarge)
 			ChangeAni("animations/longvause_idle.json");
+		break;
+	case Status::GameOver:
+		if(prevStatus != Status::GameOver)
+			animator.Play("animations/vause_die.json");
 		break;
 	}
 }
@@ -195,6 +222,7 @@ void Vause::Draw(sf::RenderWindow& window)
 
 void Vause::OnPickupItem(Item::Types type)
 {
+	SOUND_MGR.PlaySfx("sounds/Arkanoid_powerup.wav");
 	switch (type)
 	{
 	case Item::Types::Slow:

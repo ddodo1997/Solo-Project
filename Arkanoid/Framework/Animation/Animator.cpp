@@ -96,8 +96,6 @@ void Animator::Update(float dt)
 	}
 	//프레임을 설정한다.
 	SetFrame(currentClip->frames[currentFrame]);
-
-
 }
 
 void Animator::Play(const std::string& clipId, bool clearQueue)
@@ -140,6 +138,7 @@ void Animator::PlayQueue(const std::string& clipId)
 
 void Animator::Stop()
 {
+	accumTime = 0.f;
 	isPlaying = false;
 }
 

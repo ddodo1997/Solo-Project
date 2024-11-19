@@ -18,7 +18,8 @@ enum class SceneIds
 {
 	None = -1,
 	Main,
-	Game,
+	NormalGame,
+	Infinity,
 	Count,
 };
 

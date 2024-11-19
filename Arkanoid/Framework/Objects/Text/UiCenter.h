@@ -1,18 +1,15 @@
 #pragma once
 
-class UiInGame : public GameObject
+class UiCenter : public GameObject
 {
 protected:
-	sf::Text txtscore;
-	sf::Text txthighScore;
+	sf::Text txtCenter;
+	std::string fontId = "fonts/DungGeunMo.ttf";
 
-	sf::Sprite extraLifeSprite;
-	sf::Text extraLifeText;
 
-	sf::Text txtStage;
 public:
-	UiInGame(const std::string& name = "");
-	~UiInGame() = default;
+	UiCenter(const std::string& name = "");
+	~UiCenter() = default;
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float angle) override;
@@ -27,7 +24,5 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void SetScore(int score);
-	void SetHighScore(int highScore);
-	void SetExtraLife(int life);
+	void SetString(std::string str);
 };
