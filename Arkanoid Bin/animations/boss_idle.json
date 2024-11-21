@@ -1,0 +1,10 @@
+{
+    "ID": "BossIdle",
+    "LoopType": 0,
+    "FPS": 3,
+    "texId": "graphics/Arcade - Arkanoid - DOH.png",
+    "Frames":
+    [
+        [0,144,61,96]
+    ]
+}

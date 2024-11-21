@@ -55,4 +55,7 @@ public:
 	bool IsBroken() const { return isBroken; }
 
 	Types GetCurrentType()const { return currentType; }
+
+	void SetHp(int hp) { this->hp = hp; }
+	int GetHp() { return hp; }
 };

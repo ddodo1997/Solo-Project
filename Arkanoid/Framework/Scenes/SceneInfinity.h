@@ -3,10 +3,12 @@
 class SceneInfinity : public SceneGame
 {
 protected:
-	sf::Vector2i bricksSize = { 29,10 };
+	sf::Vector2i bricksSize = { 28,10 };
 
-	int emptySpace = 9;
 	int currentWave = 0;
+
+	float waveTimer = 0.f;
+	float waveDelay = 5.f;
 public:
 	SceneInfinity();
 	~SceneInfinity() = default;
@@ -20,12 +22,14 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 	void UpdateUi()override;
 
-	void AddScore(int score) override {
-		this->score += score;
-		if (this->score >= infinityHighScore)
-			infinityHighScore = this->score;
+	void AddWave() {
+		currentWave++;
+		if (currentWave > BestRecordWave)
+			BestRecordWave = currentWave;
 	}
 
 	void SpawnItem(const sf::Vector2f& position)override;
 	bool GameOver();
+
+	void PushWave();
 };

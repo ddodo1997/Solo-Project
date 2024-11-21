@@ -94,9 +94,20 @@ void Bricks::SetType(Types type)
 	switch (currentType)
 	{
 	case Types::None:
-		SetActive(false);
+	{
+		auto& data = BRICKS_TABLE->Get("None");
+		score = data.at("Score")[0];
+		hp = data.at("HP")[0];
+		body.setTextureRect({
+			data.at("Position")[0],
+			data.at("Position")[1],
+			data.at("Position")[2],
+			data.at("Position")[3]
+			});
 		isBroken = true;
+		SetActive(false);
 		return;
+	}
 	case Types::White:
 	{
 		auto& data = BRICKS_TABLE->Get("White");

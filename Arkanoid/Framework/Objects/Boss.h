@@ -1,18 +1,17 @@
 #pragma once
 
-class UiInGame : public GameObject
+class Boss : public GameObject
 {
 protected:
-	sf::Text txtscore;
-	sf::Text txthighScore;
+	sf::Sprite body;
 
-	sf::Sprite extraLifeSprite;
-	sf::Text extraLifeText;
+	Animator animator;
 
-	sf::Text txtStage;
+	int hp = 30;
+
 public:
-	UiInGame(const std::string& name = "");
-	~UiInGame() = default;
+	Boss(const std::string& name = "");
+	~Boss() = default;
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float angle) override;
@@ -27,9 +26,9 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void SetScore(int score);
-	void SetHighScore(int highScore);
-	void SetWave(int wave);
-	void SetBestRecord(int bestRecord);
-	void SetExtraLife(int life);
+	void OnHit();
+	void Attack();
+	void OnDie();
+
+	bool isDie()const { return hp > 0 ? false : true; }
 };

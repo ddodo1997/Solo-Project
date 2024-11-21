@@ -7,6 +7,7 @@ private:
 	{
 		Normal,
 		Infinity,
+		Boss,
 		Exit,
 	};
 	static const int TotalSelect = 2;
@@ -15,6 +16,7 @@ protected:
 	sf::Text txtmainTitle;
 	sf::Text txtNormal;
 	sf::Text txtInfinity;
+	sf::Text txtBoss;
 	sf::Text txtExit;
 
 	sf::Text txtArrow;

@@ -54,6 +54,7 @@ void UiMain::Reset()
 	txtmainTitle.setFont(titleFont);
 	txtNormal.setFont(otherFont);
 	txtInfinity.setFont(otherFont);
+	txtBoss.setFont(otherFont);
 	txtExit.setFont(otherFont);
 	txtArrow.setFont(otherFont);
 
@@ -73,13 +74,18 @@ void UiMain::Reset()
 	txtNormal.setString(STRING_TABLE->Get("Normal"));
 	txtNormal.setCharacterSize(50);
 	Utils::SetOrigin(txtNormal, Origins::MC);
-	txtNormal.setPosition({ size.x * 0.5f,size.y * 0.7f });
+	txtNormal.setPosition({ size.x * 0.5f,size.y * 0.65f });
 
 
 	txtInfinity.setString(STRING_TABLE->Get("Infinity"));
 	txtInfinity.setCharacterSize(50);
 	Utils::SetOrigin(txtInfinity, Origins::MC);
-	txtInfinity.setPosition({ size.x * 0.5f,size.y * 0.78f });
+	txtInfinity.setPosition({ size.x * 0.5f,size.y * 0.72f });
+
+	txtBoss.setString(STRING_TABLE->Get("Boss"));
+	txtBoss.setCharacterSize(50);
+	Utils::SetOrigin(txtBoss, Origins::MC);
+	txtBoss.setPosition({ size.x * 0.5f,size.y * 0.78f });
 
 
 	txtExit.setString(STRING_TABLE->Get("Exit"));
@@ -90,7 +96,7 @@ void UiMain::Reset()
 	txtArrow.setString("->");
 	txtArrow.setCharacterSize(50);
 	Utils::SetOrigin(txtArrow, Origins::MC);
-	txtArrow.setPosition({ size.x * 0.41f,size.y * 0.7f });
+	txtArrow.setPosition({ size.x * 0.41f,size.y * 0.65f });
 
 	currentSelect = Select::Normal;
 }
@@ -100,24 +106,41 @@ void UiMain::Update(float dt)
 	auto size = FRAMEWORK.GetWindowSizeF();
 	if((InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S))&& currentSelect == Select::Normal)
 	{
-		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.775f });
+		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.715f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
 		currentSelect = Select::Infinity;
 	}
 	else if ((InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S)) && currentSelect == Select::Infinity)
 	{
+		txtArrow.setPosition({ size.x * 0.42f,size.y * 0.78f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
+		currentSelect = Select::Boss;
+	}
+	else if ((InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S)) && currentSelect == Select::Boss)
+	{
 		txtArrow.setPosition({ size.x * 0.45f,size.y * 0.85f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
 		currentSelect = Select::Exit;
 	}
 
+
 	if ((InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W)) && currentSelect == Select::Infinity)
 	{
-		txtArrow.setPosition({ size.x * 0.41f,size.y * 0.7f });
+		txtArrow.setPosition({ size.x * 0.41f,size.y * 0.65f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
 		currentSelect = Select::Normal;
+	}
+	else if ((InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W)) && currentSelect == Select::Boss)
+	{
+		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.715f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
+		currentSelect = Select::Infinity;
 	}
 	else if ((InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W)) && currentSelect == Select::Exit)
 	{
-		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.775f });
-		currentSelect = Select::Infinity;
+		txtArrow.setPosition({ size.x * 0.42f,size.y * 0.78f });
+		Utils::SetOrigin(txtArrow, Origins::MC);
+		currentSelect = Select::Boss;
 	}
 
 
@@ -130,6 +153,9 @@ void UiMain::Update(float dt)
 			break;
 		case Select::Infinity:
 			SCENE_MGR.ChangeScene(SceneIds::Infinity);
+			break;
+		case Select::Boss:
+			SCENE_MGR.ChangeScene(SceneIds::Boss);
 			break;
 		case Select::Exit:
 			FRAMEWORK.GetWindow().close();
@@ -144,6 +170,7 @@ void UiMain::Draw(sf::RenderWindow& window)
 	window.draw(txtmainTitle);
 	window.draw(txtNormal);
 	window.draw(txtInfinity);
+	window.draw(txtBoss);
 	window.draw(txtExit);
 	window.draw(txtArrow);
 }

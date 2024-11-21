@@ -130,7 +130,7 @@ void TileMap::SetBackGround(sf::Vector2i count, sf::Vector2f size)
 		for (int j = 0; j < cellcount.x; j++)
 		{
 			int texIdx = 2;
-			if (dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode() == SceneGame::Mode::Infinity)
+			if (dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode() != SceneGame::Mode::Normal)
 				texIdx = 3;
 			//현재 타일의 인덱스
 			int quadIdx = i * cellcount.x + j;

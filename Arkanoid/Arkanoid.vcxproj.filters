@@ -100,8 +100,18 @@
     <ClCompile Include="Framework\Objects\Vause.cpp">
       <Filter>Framework\Objects\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\Scenes\SceneInfinity.cpp" />
-    <ClCompile Include="Framework\Scenes\SceneNormalGame.cpp" />
+    <ClCompile Include="Framework\Scenes\SceneNormalGame.cpp">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Scenes\SceneInfinity.cpp">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\Boss.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Scenes\SceneBoss.cpp">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -215,8 +225,18 @@
     <ClInclude Include="Framework\Objects\Vause.h">
       <Filter>Framework\Objects\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\Scenes\SceneInfinity.h" />
-    <ClInclude Include="Framework\Scenes\SceneNormalGame.h" />
+    <ClInclude Include="Framework\Scenes\SceneNormalGame.h">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Scenes\SceneInfinity.h">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Boss.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Scenes\SceneBoss.h">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

@@ -97,6 +97,18 @@ void UiInGame::SetHighScore(int highScore)
 	Utils::SetOrigin(txthighScore, Origins::TC);
 }
 
+void UiInGame::SetWave(int wave)
+{
+	txtscore.setString(STRING_TABLE->Get("Wave") + std::to_string(wave));
+	Utils::SetOrigin(txtscore, Origins::TC);
+}
+
+void UiInGame::SetBestRecord(int bestRecord)
+{
+	txthighScore.setString(STRING_TABLE->Get("BestRecord") + std::to_string(bestRecord));
+	Utils::SetOrigin(txthighScore, Origins::TC);
+}
+
 void UiInGame::SetExtraLife(int life)
 {
 	auto size = FRAMEWORK.GetWindowSizeF();

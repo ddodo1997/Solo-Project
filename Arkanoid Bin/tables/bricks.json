@@ -1,4 +1,9 @@
 {
+	"None":{
+		"Score": [0],
+        "HP": [0],
+		"Position" : [64,0,16,8]
+	},
     "White": {
         "Score": [50],
         "HP": [1],

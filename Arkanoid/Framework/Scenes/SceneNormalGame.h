@@ -21,11 +21,7 @@ public:
 
 	void UpdateUi()override;
 
-	void AddScore(int score) override {
-		this->score += score;
-		if (this->score >= normalHighScore)
-			normalHighScore = this->score;
-	}
+
 	void SpawnItem(const sf::Vector2f& position) override;
 };
 

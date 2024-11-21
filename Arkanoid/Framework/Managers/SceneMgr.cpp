@@ -3,13 +3,14 @@
 #include "SceneMain.h"
 #include "SceneNormalGame.h"
 #include "SceneInfinity.h"
+#include "SceneBoss.h"
 
 void SceneMgr::Init()
 {
 	scenes.push_back(new SceneMain());
 	scenes.push_back(new SceneNormalGame());
 	scenes.push_back(new SceneInfinity());
-
+	scenes.push_back(new SceneBoss());
 	for (auto scene : scenes)
 	{
 		scene->Init();

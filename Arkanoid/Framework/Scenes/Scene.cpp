@@ -16,7 +16,7 @@ void Scene::Init()
 		obj->Init();
 	}
 	normalHighScore = SAVELOAD_MGR.Load().normalHighScore;
-	infinityHighScore = SAVELOAD_MGR.Load().infinityHighScore;
+	BestRecordWave = SAVELOAD_MGR.Load().BestRecordWave;
 }
 
 void Scene::Release()
@@ -49,7 +49,7 @@ void Scene::Exit()
 
 	SaveDataVC data;
 	data.normalHighScore = normalHighScore;
-	data.infinityHighScore = infinityHighScore;
+	data.BestRecordWave = BestRecordWave;
 	SAVELOAD_MGR.Save(data);
 }
 

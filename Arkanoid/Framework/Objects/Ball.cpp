@@ -103,6 +103,7 @@ void Ball::Update(float dt)
 	else if (position.y > movableBounds.height)
 	{
 		sceneGame->ReturnBall(this);
+		SetPosition({ 0.f,0.f });
 		if (sceneGame->GetActiveBall().empty())
 		{
 			vause->SetGameover(true);

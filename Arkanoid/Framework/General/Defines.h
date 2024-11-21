@@ -20,6 +20,7 @@ enum class SceneIds
 	Main,
 	NormalGame,
 	Infinity,
+	Boss,
 	Count,
 };
 

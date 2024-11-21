@@ -13,7 +13,7 @@ protected:
 	sf::Vector2f windowSize = { 1920,1080 };
 
 	int normalHighScore = 0;
-	int infinityHighScore = 0;
+	int BestRecordWave = 0;
 public:
 	const SceneIds id;
 

@@ -6,6 +6,9 @@
         "Normal": "Normal Mode",
         "Infinity": "Infinity Mode",
         "Exit": "EXIT",
-        "Score": "Score: "
+        "Score": "Score: ",
+		"Wave" : "Now Wave: ",
+		"BestRecord" : "BestRecord: ",
+		"Boss" : "Boss Mode"
     }
 }

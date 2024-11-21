@@ -43,8 +43,6 @@ void SceneInfinity::SetStage()
 			bricks[i][j]->SetPosition({ -320.f + j * size.width * scale.x, -505.f + i * size.height * scale.y });
 		}
 	}
-
-
 }
 
 void SceneInfinity::Enter()
@@ -57,8 +55,9 @@ void SceneInfinity::Enter()
 	mainBall = SpawnBall(vause->GetPosition());
 	uiCenter->SetString("");
 
-	emptySpace = 9;
 	currentWave = 0;
+	waveTimer = 0.f;
+	PushWave();
 }
 
 void SceneInfinity::Exit()
@@ -88,13 +87,16 @@ void SceneInfinity::Update(float dt)
 		ReturnBall(mainBall);
 	}
 
-
 	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 	{
-		for (int i = 0; i < bricksSize.y; i++)
-		{
-			bricks[bricksSize.x - 1][i]->SetType((Bricks::Types)3);
-		}
+		PushWave();
+	}
+
+	waveTimer += dt;
+	if (waveTimer > waveDelay)
+	{
+		PushWave();
+		waveTimer = 0.f;
 	}
 }
 
@@ -105,8 +107,8 @@ void SceneInfinity::Draw(sf::RenderWindow& window)
 
 void SceneInfinity::UpdateUi()
 {
-	SceneGame::UpdateUi();
-	uiInGame->SetHighScore(infinityHighScore);
+	uiInGame->SetWave(currentWave);
+	uiInGame->SetBestRecord(BestRecordWave);
 }
 
 void SceneInfinity::SpawnItem(const sf::Vector2f& position)
@@ -118,7 +120,7 @@ void SceneInfinity::SpawnItem(const sf::Vector2f& position)
 	int cnt = 0;
 	int weight = 0;
 
-	int percentage[6] = { 750,0,100,50,100,0 };
+	int percentage[6] = { 750,0,100,100,50,0 };
 	for (int i = 0; i < Item::TotalTypes; i++)
 	{
 		if (weight + percentage[i] >= rand)
@@ -131,6 +133,7 @@ void SceneInfinity::SpawnItem(const sf::Vector2f& position)
 
 	Item::Types type = (Item::Types)cnt;
 	item->SetType(type);
+	//item->SetType(Item::Types::Disruption);
 	item->SetPosition(position);
 
 	AddGo(item);
@@ -148,4 +151,22 @@ bool SceneInfinity::GameOver()
 		}
 	}
 	return result;
+}
+
+void SceneInfinity::PushWave()
+{
+	AddWave();
+
+	for (int i = bricksSize.x - 1; i > 0 ; i--)
+	{
+		for (int j = 0; j < bricksSize.y; j++)
+		{
+			bricks[i][j]->SetType(bricks[i - 1][j]->GetCurrentType());
+			bricks[i][j]->SetHp(bricks[i - 1][j]->GetHp());
+		}
+	}
+	for (int i = 0; i < bricksSize.y; i++)
+	{
+		bricks[0][i]->SetType((Bricks::Types)Utils::RandomRange(-1, currentWave > 20 ? 8 : 7));
+	}
 }

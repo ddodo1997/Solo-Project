@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Objects\Boss.cpp" />
     <ClCompile Include="Framework\Objects\Bricks.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -198,8 +199,10 @@
     <ClCompile Include="Framework\Objects\Laser.cpp" />
     <ClCompile Include="Framework\Tables\StageTable.cpp" />
     <ClCompile Include="Framework\Objects\Text\UiCenter.cpp" />
+    <ClCompile Include="Framework\Scenes\SceneBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Objects\Boss.h" />
     <ClInclude Include="Framework\Objects\Bricks.h" />
     <ClInclude Include="Framework\Scenes\SceneInfinity.h" />
     <ClInclude Include="Framework\Scenes\SceneNormalGame.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="Framework\Objects\Laser.h" />
     <ClInclude Include="Framework\Tables\StageTable.h" />
     <ClInclude Include="Framework\Objects\Text\UiCenter.h" />
+    <ClInclude Include="Framework\Scenes\SceneBoss.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

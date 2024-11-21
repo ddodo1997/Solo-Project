@@ -23,6 +23,7 @@ public:
 	{
 		Normal,
 		Infinity,
+		Boss,
 	};
 
 protected:
@@ -73,5 +74,9 @@ public:
 
 	Mode GetCurrentMode() const { return currentMode; }
 
-	virtual void AddScore(int score) = 0;
+	void AddScore(int score) {
+		this->score += score;
+		if (this->score >= normalHighScore)
+			normalHighScore = this->score;
+	}
 };
