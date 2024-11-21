@@ -10,7 +10,7 @@
 #include "UiCenter.h"
 SceneNormalGame::SceneNormalGame() : SceneGame(SceneIds::NormalGame)
 {
-
+	currentMode = Mode::Normal;
 }
 
 void SceneNormalGame::Init()
@@ -35,6 +35,7 @@ void SceneNormalGame::Enter()
 {
 	SceneGame::Enter();
 	SetStage(Stages::Stage1);
+	uiCenter->SetString("");
 }
 
 void SceneNormalGame::Exit()
@@ -98,6 +99,7 @@ void SceneNormalGame::SetStage(Stages stage)
 	mainBall = SpawnBall(vause->GetPosition());
 
 	currentStage = stage;
+
 	std::string key;
 	switch (currentStage)
 	{
@@ -141,4 +143,31 @@ void SceneNormalGame::UpdateUi()
 {
 	SceneGame::UpdateUi();
 	uiInGame->SetHighScore(normalHighScore);
+}
+
+void SceneNormalGame::SpawnItem(const sf::Vector2f& position)
+{
+	Item* item = itemPool.Take();
+	activeItems.push_back(item);
+
+	int rand = Utils::RandomRange(0, 1000);
+	int cnt = 0;
+	int weight = 0;
+
+	int percentage[6] = { 750,100,50,50,25,25 };
+	for (int i = 0; i < Item::TotalTypes; i++)
+	{
+		if (weight + percentage[i] >= rand)
+		{
+			break;
+		}
+		weight += percentage[i];
+		cnt++;
+	}
+
+	Item::Types type = (Item::Types)cnt;
+	item->SetType(type);
+	item->SetPosition(position);
+
+	AddGo(item);
 }

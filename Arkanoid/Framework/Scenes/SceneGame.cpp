@@ -106,36 +106,6 @@ void SceneGame::UpdateUi()
 	uiInGame->SetExtraLife(vause->GetExtraLife());
 }
 
-
-
-void SceneGame::SpawnItem(const sf::Vector2f& position)
-{
-	Item* item = itemPool.Take();
-	activeItems.push_back(item);
-
-	int rand = Utils::RandomRange(0, 1000);
-	int cnt = 0;
-	int weight = 0;
-
-	int percentage[6] = { 750,100,50,50,25,25 };
-	for (int i = 0; i < Item::TotalTypes; i++)
-	{
-		if (weight + percentage[i] >= rand)
-		{
-			break;
-		}
-		weight += percentage[i];
-		cnt++;
-	}
-
-	Item::Types type = (Item::Types)cnt;
-	item->SetType(type);
-	//item->SetType(Item::Types::Laser);
-	item->SetPosition(position);
-
-	AddGo(item);
-}
-
 void SceneGame::ReturnItem(Item* item)
 {
 	RemoveGo(item);

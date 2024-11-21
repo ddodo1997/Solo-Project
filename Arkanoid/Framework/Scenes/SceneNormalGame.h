@@ -26,5 +26,6 @@ public:
 		if (this->score >= normalHighScore)
 			normalHighScore = this->score;
 	}
+	void SpawnItem(const sf::Vector2f& position) override;
 };
 

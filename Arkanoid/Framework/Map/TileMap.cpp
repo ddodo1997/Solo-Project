@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "TileMap.h"
+#include <SceneGame.h>
 
 TileMap::TileMap(const std::string& name)
 	: GameObject(name)
@@ -129,7 +130,7 @@ void TileMap::SetBackGround(sf::Vector2i count, sf::Vector2f size)
 		for (int j = 0; j < cellcount.x; j++)
 		{
 			int texIdx = 2;
-			if (name == "Infinity")
+			if (dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode() == SceneGame::Mode::Infinity)
 				texIdx = 3;
 			//현재 타일의 인덱스
 			int quadIdx = i * cellcount.x + j;

@@ -19,6 +19,12 @@ public:
 		Stage3,
 	};
 
+	enum class Mode
+	{
+		Normal,
+		Infinity,
+	};
+
 protected:
 	TileMap* tileMap;
 	Vause* vause;
@@ -36,6 +42,7 @@ protected:
 	UiCenter* uiCenter;
 	int score = 0;
 
+	Mode currentMode;
 public:
 	SceneGame(SceneIds id);
 	~SceneGame() = default;
@@ -51,7 +58,7 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	virtual void UpdateUi();
-	virtual void SpawnItem(const sf::Vector2f& position);
+	virtual void SpawnItem(const sf::Vector2f& position) = 0;
 	virtual void ReturnItem(Item* item);
 	virtual Ball* SpawnBall(const sf::Vector2f& position, bool isMoving = false);
 	virtual void ReturnBall(Ball* ball);
@@ -64,6 +71,7 @@ public:
 	virtual std::vector<Laser*>& GetLaser() { return lasers; }
 	virtual const std::list<Item*>& GetActiveItems() { return activeItems; }
 
+	Mode GetCurrentMode() const { return currentMode; }
 
 	virtual void AddScore(int score) = 0;
 };

@@ -248,6 +248,7 @@ void Bricks::OnHit()
 	{
 		SetActive(false);
 		isBroken = true;
+		currentType = Types::None;
 		dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->SpawnItem(position);
 		dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->AddScore(score);
 	}

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "UiInGame.h"
+#include <SceneGame.h>
 
 UiInGame::UiInGame(const std::string& name)
 	: GameObject(name)
@@ -78,6 +79,8 @@ void UiInGame::Draw(sf::RenderWindow& window)
 {
 	window.draw(txtscore);
 	window.draw(txthighScore);
+	if (dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode() == SceneGame::Mode::Infinity)
+		return;
 	window.draw(extraLifeSprite);
 	window.draw(extraLifeText);
 }

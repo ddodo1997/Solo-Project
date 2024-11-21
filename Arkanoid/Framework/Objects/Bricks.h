@@ -39,8 +39,8 @@ public:
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(const sf::Vector2f& newOrigin) override;
 
-	sf::FloatRect GetLocalBounds()const { return body.getLocalBounds(); }
-	sf::FloatRect GetGlobalBounds()const { return body.getGlobalBounds(); }
+	sf::FloatRect GetLocalBounds()const override { return body.getLocalBounds(); }
+	sf::FloatRect GetGlobalBounds()const override { return body.getGlobalBounds(); }
 
 	void Init() override;
 	void Release() override;
@@ -53,4 +53,6 @@ public:
 	void OnHit();
 
 	bool IsBroken() const { return isBroken; }
+
+	Types GetCurrentType()const { return currentType; }
 };

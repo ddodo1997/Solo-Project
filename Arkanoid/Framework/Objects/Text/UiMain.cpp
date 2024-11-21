@@ -50,16 +50,17 @@ void UiMain::Reset()
 	auto size = FRAMEWORK.GetWindowSizeF();
 	auto& otherFont = FONT_MGR.Get("fonts/DungGeunMo.ttf");
 	auto& titleFont = FONT_MGR.Get("fonts/Arka_solid.ttf");
-	txthighScore.setFont(otherFont);
+	txtDev.setFont(otherFont);
 	txtmainTitle.setFont(titleFont);
-	txtstart.setFont(otherFont);
+	txtNormal.setFont(otherFont);
+	txtInfinity.setFont(otherFont);
 	txtExit.setFont(otherFont);
 	txtArrow.setFont(otherFont);
 
-	txthighScore.setString(STRING_TABLE->Get("HighScore"));
-	txthighScore.setCharacterSize(50);
-	Utils::SetOrigin(txthighScore, Origins::TC);
-	txthighScore.setPosition({ size.x * 0.5f,0.f });
+	txtDev.setString(STRING_TABLE->Get("Who"));
+	txtDev.setCharacterSize(50);
+	Utils::SetOrigin(txtDev, Origins::TC);
+	txtDev.setPosition({ size.x * 0.5f,0.f });
 
 	txtmainTitle.setString(STRING_TABLE->Get("MainTitle"));
 	txtmainTitle.setCharacterSize(150);
@@ -69,10 +70,17 @@ void UiMain::Reset()
 	txtmainTitle.setOutlineColor(sf::Color::Red);
 	txtmainTitle.setOutlineThickness(3);
 
-	txtstart.setString(STRING_TABLE->Get("Start"));
-	txtstart.setCharacterSize(50);
-	Utils::SetOrigin(txtstart, Origins::MC);
-	txtstart.setPosition({ size.x * 0.5f,size.y * 0.8f });
+	txtNormal.setString(STRING_TABLE->Get("Normal"));
+	txtNormal.setCharacterSize(50);
+	Utils::SetOrigin(txtNormal, Origins::MC);
+	txtNormal.setPosition({ size.x * 0.5f,size.y * 0.7f });
+
+
+	txtInfinity.setString(STRING_TABLE->Get("Infinity"));
+	txtInfinity.setCharacterSize(50);
+	Utils::SetOrigin(txtInfinity, Origins::MC);
+	txtInfinity.setPosition({ size.x * 0.5f,size.y * 0.78f });
+
 
 	txtExit.setString(STRING_TABLE->Get("Exit"));
 	txtExit.setCharacterSize(50);
@@ -82,28 +90,46 @@ void UiMain::Reset()
 	txtArrow.setString("->");
 	txtArrow.setCharacterSize(50);
 	Utils::SetOrigin(txtArrow, Origins::MC);
-	txtArrow.setPosition({ txtstart.getPosition().x - 150, txtstart.getPosition().y });
+	txtArrow.setPosition({ size.x * 0.41f,size.y * 0.7f });
+
+	currentSelect = Select::Normal;
 }
 
 void UiMain::Update(float dt)
 {
-	if(InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S))
+	auto size = FRAMEWORK.GetWindowSizeF();
+	if((InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S))&& currentSelect == Select::Normal)
 	{
-		txtArrow.setPosition({ txtExit.getPosition().x - 75, txtExit.getPosition().y });
+		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.775f });
+		currentSelect = Select::Infinity;
+	}
+	else if ((InputMgr::GetKeyDown(sf::Keyboard::Down) || InputMgr::GetKeyDown(sf::Keyboard::S)) && currentSelect == Select::Infinity)
+	{
+		txtArrow.setPosition({ size.x * 0.45f,size.y * 0.85f });
 		currentSelect = Select::Exit;
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W))
+
+	if ((InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W)) && currentSelect == Select::Infinity)
 	{
-		txtArrow.setPosition({ txtstart.getPosition().x - 150, txtstart.getPosition().y });
-		currentSelect = Select::Play;
+		txtArrow.setPosition({ size.x * 0.41f,size.y * 0.7f });
+		currentSelect = Select::Normal;
 	}
+	else if ((InputMgr::GetKeyDown(sf::Keyboard::Up) || InputMgr::GetKeyDown(sf::Keyboard::W)) && currentSelect == Select::Exit)
+	{
+		txtArrow.setPosition({ size.x * 0.4f,size.y * 0.775f });
+		currentSelect = Select::Infinity;
+	}
+
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		switch (currentSelect)
 		{
-		case Select::Play:
+		case Select::Normal:
 			SCENE_MGR.ChangeScene(SceneIds::NormalGame);
+			break;
+		case Select::Infinity:
+			SCENE_MGR.ChangeScene(SceneIds::Infinity);
 			break;
 		case Select::Exit:
 			FRAMEWORK.GetWindow().close();
@@ -114,9 +140,10 @@ void UiMain::Update(float dt)
 
 void UiMain::Draw(sf::RenderWindow& window)
 {
-	window.draw(txthighScore);
+	window.draw(txtDev);
 	window.draw(txtmainTitle);
-	window.draw(txtstart);
+	window.draw(txtNormal);
+	window.draw(txtInfinity);
 	window.draw(txtExit);
 	window.draw(txtArrow);
 }

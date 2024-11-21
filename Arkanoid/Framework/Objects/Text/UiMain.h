@@ -5,19 +5,21 @@ class UiMain : public GameObject
 private:
 	enum class Select
 	{
-		Play,
+		Normal,
+		Infinity,
 		Exit,
 	};
 	static const int TotalSelect = 2;
 protected:
-	sf::Text txthighScore;
+	sf::Text txtDev;
 	sf::Text txtmainTitle;
-	sf::Text txtstart;
+	sf::Text txtNormal;
+	sf::Text txtInfinity;
 	sf::Text txtExit;
 
 	sf::Text txtArrow;
 
-	Select currentSelect = Select::Play;
+	Select currentSelect = Select::Normal;
 public:
 	UiMain(const std::string& name = "");
 	~UiMain() = default;

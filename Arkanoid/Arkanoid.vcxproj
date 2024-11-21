@@ -134,8 +134,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\Framework\Tables;.\Framework\Scenes;.\Framework\Objects;.\Framework\Map;.\Framework\Managers;.\Framework\General;.\Framework\Animation;.\SFML-2.6.1\include;.\Framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Framework\Tables;.\Framework\Scenes;.\Framework\Objects;.\Framework\Map;.\Framework\Managers;.\Framework\General;.\Framework\Animation;.\SFML-2.6.1\include;.\Framework;.\Framework\Objects\Text;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +152,8 @@
     <ClCompile Include="Framework\Objects\Bricks.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Framework\Scenes\SceneInfinity.cpp" />
+    <ClCompile Include="Framework\Scenes\SceneNormalGame.cpp" />
     <ClCompile Include="Framework\Tables\BricksTable.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -195,11 +198,11 @@
     <ClCompile Include="Framework\Objects\Laser.cpp" />
     <ClCompile Include="Framework\Tables\StageTable.cpp" />
     <ClCompile Include="Framework\Objects\Text\UiCenter.cpp" />
-    <ClCompile Include="SceneInfinity.cpp" />
-    <ClCompile Include="SceneNormalGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Objects\Bricks.h" />
+    <ClInclude Include="Framework\Scenes\SceneInfinity.h" />
+    <ClInclude Include="Framework\Scenes\SceneNormalGame.h" />
     <ClInclude Include="Framework\Tables\BricksTable.h" />
     <ClInclude Include="Framework\Animation\Animator.h" />
     <ClInclude Include="Framework\Animation\AnimationClip.h" />
@@ -236,8 +239,6 @@
     <ClInclude Include="Framework\Objects\Laser.h" />
     <ClInclude Include="Framework\Tables\StageTable.h" />
     <ClInclude Include="Framework\Objects\Text\UiCenter.h" />
-    <ClInclude Include="SceneInfinity.h" />
-    <ClInclude Include="SceneNormalGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

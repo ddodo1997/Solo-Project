@@ -3,13 +3,16 @@
 class SceneInfinity : public SceneGame
 {
 protected:
-	sf::Vector2i bricksSize = { 10,10 };
+	sf::Vector2i bricksSize = { 29,10 };
 
+	int emptySpace = 9;
+	int currentWave = 0;
 public:
 	SceneInfinity();
 	~SceneInfinity() = default;
 	void Init() override;
 	void InitBricks();
+	void SetStage();
 	void Enter() override;
 	void Exit() override;
 
@@ -22,4 +25,7 @@ public:
 		if (this->score >= infinityHighScore)
 			infinityHighScore = this->score;
 	}
+
+	void SpawnItem(const sf::Vector2f& position)override;
+	bool GameOver();
 };

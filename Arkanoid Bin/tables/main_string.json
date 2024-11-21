@@ -1,9 +1,11 @@
 {
     "String": {
-        "HighScore": "HIGH SCORE: ",
+        "Who": "Thanks To TAITO",
+        "HighScore": "HighScore: ",
         "MainTitle": "ARKANOID",
-        "Start": "GAME START",
-		"Exit" : "EXIT",
-		"Score" : "Score: "
+        "Normal": "Normal Mode",
+        "Infinity": "Infinity Mode",
+        "Exit": "EXIT",
+        "Score": "Score: "
     }
 }

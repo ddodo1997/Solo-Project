@@ -89,7 +89,10 @@ void Vause::Reset()
 	Utils::SetOrigin(body, Origins::TC);
 	SetPosition({ 0.f,400.f });
 
-	life = 3;
+	if (sceneGame->GetCurrentMode() == SceneGame::Mode::Normal)
+		life = 3;
+	else if (sceneGame->GetCurrentMode() == SceneGame::Mode::Infinity)
+		life = 0;
 	currentStatus = Status::Normal;
 	enlargeTimer = 0.f;
 	laserTimer = 0.f;
@@ -222,6 +225,10 @@ void Vause::Draw(sf::RenderWindow& window)
 
 void Vause::OnPickupItem(Item::Types type)
 {
+	if (currentStatus == Status::GameOver)
+	{
+		return;
+	}
 	SOUND_MGR.PlaySfx("sounds/Arkanoid_powerup.wav");
 	switch (type)
 	{
