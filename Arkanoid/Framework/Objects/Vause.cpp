@@ -104,6 +104,8 @@ void Vause::Update(float dt)
 {
 	animator.Update(dt);
 
+	if (isDevMode)
+		SetInvincible(true);
 
 	if (isInvincible)
 	{

@@ -236,7 +236,7 @@ void Bricks::SetType(Types type)
 	SetActive(true);
 }
 
-void Bricks::OnHit()
+void Bricks::OnHit(int damage)
 {
 	if(animator)
 	{
@@ -254,7 +254,7 @@ void Bricks::OnHit()
 	else {
 		SOUND_MGR.PlaySfx("sounds/Arkanoid_brick.wav");
 	}
-	hp--;
+	hp -= damage;
 	if (hp <= 0)
 	{
 		SetActive(false);

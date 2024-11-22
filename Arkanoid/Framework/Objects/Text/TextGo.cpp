@@ -63,15 +63,16 @@ void TextGo::Set(int size, const sf::Color &color)
 
 void TextGo::SetString(const std::string& id)
 {
-	stringId = id;
-	text.setString(STRING_TABLE->Get(stringId));
+	//stringId = id;
+	//text.setString(STRING_TABLE->Get(stringId));
+	text.setString(id);
 	SetOrigin(originPreset);
-
-	//text.setString(id);
 }
 
 void TextGo::Init()
 {
+	sortingLayer = SortingLayers::UI;
+	sortingOrder = 0;
 }
 
 void TextGo::Release()

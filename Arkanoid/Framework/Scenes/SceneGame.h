@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "UiDevMode.h"
 class Vause;
 class TileMap;
 class Ball;
@@ -42,6 +43,7 @@ protected:
 
 	UiInGame* uiInGame;
 	UiCenter* uiCenter;
+	UiDevMode* uiDevMode;
 	int score = 0;
 
 	Mode currentMode;
@@ -82,4 +84,6 @@ public:
 	}
 
 	virtual Boss* GetBoss() { return nullptr; }
+
+	virtual void OnUpgrade(UiDevMode::DevMenu dev);
 };

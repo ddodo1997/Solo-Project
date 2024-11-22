@@ -50,7 +50,7 @@ public:
 
 	void SetType(Types type);
 
-	void OnHit();
+	void OnHit(int damage);
 
 	bool IsBroken() const { return isBroken; }
 

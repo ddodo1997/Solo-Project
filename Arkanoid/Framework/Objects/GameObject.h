@@ -15,6 +15,7 @@ protected:
 	sf::Vector2f origin;
 
 	HitBox hitBox;
+	bool isDevMode = false;
 public:
 	SortingLayers sortingLayer = SortingLayers::Default;
 	int sortingOrder = 0;
@@ -52,7 +53,7 @@ public:
 	virtual void Init() = 0;
 	virtual void Release() = 0;
 
-	virtual void Reset() = 0;
+	virtual void Reset();
 
 	virtual void Update(float dt) = 0;
 	virtual void LateUpdate(float dt) {}
@@ -60,6 +61,8 @@ public:
 	virtual void Draw(sf::RenderWindow& window) = 0;
 
 	virtual void OnLocallize(Languages lang);
+
+	void SetDevMode() { isDevMode = !isDevMode; }
 };
 
 struct DrawOrderComparer

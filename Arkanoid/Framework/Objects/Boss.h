@@ -72,7 +72,7 @@ public:
 	void Pattern3(float dt);
 	void Draw(sf::RenderWindow& window) override;
 
-	void OnHit(sf::Vector2f pos);
+	void OnHit(sf::Vector2f pos, int damage);
 	void Attack();
 	void OnDie();
 

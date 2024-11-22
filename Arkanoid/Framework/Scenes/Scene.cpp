@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
-
+#include "UiFrame.h"
 Scene::Scene(SceneIds id)
 	: id(id)
 {
@@ -8,6 +8,7 @@ Scene::Scene(SceneIds id)
 
 void Scene::Init()
 {
+	uiFrame = AddGo(new UiFrame("UiFrame"));
 	ApplyAddGo();
 	ApplyRemoveGO();
 
@@ -50,7 +51,8 @@ void Scene::Exit()
 	SaveDataVC data;
 	data.normalHighScore = normalHighScore;
 	data.BestRecordWave = BestRecordWave;
-	SAVELOAD_MGR.Save(data);
+	if(!Variables::devMode)
+		SAVELOAD_MGR.Save(data);
 }
 
 void Scene::Update(float dt)

@@ -41,6 +41,7 @@ protected:
 	float invincibleTimer = 0.f;
 	float invincibleDelay = 1.f;
 	bool isInvincible = false;
+
 public:
 	Vause(const std::string& name = "");
 	~Vause() = default;
@@ -54,6 +55,7 @@ public:
 
 	sf::FloatRect GetLocalBounds()const  override;
 	sf::FloatRect GetGlobalBounds()const override;
+
 
 	void ChangeAni(const std::string& id, const std::string& nextId = "");
 
@@ -78,6 +80,8 @@ public:
 
 	sf::FloatRect GetBatBounds() { return body.getGlobalBounds(); }
 	int GetExtraLife() const { return life; }
+
+	void SetLife(int extra) { life = extra; }
 
 	void OnPickupItem(Item::Types type);
 

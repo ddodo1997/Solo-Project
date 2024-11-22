@@ -1,4 +1,5 @@
 #pragma once
+class UiFrame;
 class Scene
 {
 protected:
@@ -11,6 +12,8 @@ protected:
 	sf::View uiView;
 
 	sf::Vector2f windowSize = { 1920,1080 };
+
+	UiFrame* uiFrame;
 
 	int normalHighScore = 0;
 	int BestRecordWave = 0;

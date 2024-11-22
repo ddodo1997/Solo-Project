@@ -1,7 +1,7 @@
 {
     "ID": "BossFire",
     "LoopType": 1,
-    "FPS": 5,
+    "FPS": 20,
     "texId": "graphics/Ninja Gaiden Shadow.png",
     "Frames":
     [

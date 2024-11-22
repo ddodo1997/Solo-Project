@@ -13,6 +13,11 @@ void GameObject::SetOrigin(Origins preset)
 	origin = { 0.f, 0.f };
 }
 
+void GameObject::Reset()
+{
+	isDevMode = false;
+}
+
 void GameObject::OnLocallize(Languages lang)
 {
 	Variables::currentLang = lang;

@@ -29,5 +29,8 @@ public:
 	void OnLocallize(Languages lang) override;
 
 	void SetFillColor(sf::Color color) { text.setFillColor(color); }
+
+	void SetFont(sf::Font font) { text.setFont(font); }
+	void SetCharacterSize(float size) { text.setCharacterSize(size); }
 };
 

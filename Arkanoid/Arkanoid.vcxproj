@@ -203,6 +203,8 @@
     <ClCompile Include="Framework\Scenes\SceneBoss.cpp" />
     <ClCompile Include="Framework\Objects\Shuriken.cpp" />
     <ClCompile Include="Framework\Objects\LavaRain.cpp" />
+    <ClCompile Include="Framework\Objects\Text\UiFrame.cpp" />
+    <ClCompile Include="Framework\Objects\Text\UiDevMode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Objects\FireBall.h" />
@@ -249,6 +251,8 @@
     <ClInclude Include="Framework\Scenes\SceneBoss.h" />
     <ClInclude Include="Framework\Objects\Shuriken.h" />
     <ClInclude Include="Framework\Objects\LavaRain.h" />
+    <ClInclude Include="Framework\Objects\Text\UiFrame.h" />
+    <ClInclude Include="Framework\Objects\Text\UiDevMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

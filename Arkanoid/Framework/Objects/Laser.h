@@ -25,6 +25,8 @@ protected:
 	SceneGame* sceneGame;
 
 	bool isFire = false;
+
+	int damage = 1;
 public:
 	Laser(const std::string& name = "");
 	~Laser() = default;

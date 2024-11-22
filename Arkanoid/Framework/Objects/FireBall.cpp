@@ -60,6 +60,7 @@ void FireBall::Reset()
 	vause = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetVause();
 	animator.Play("animations/boss_fire.json");
 	SetScale({ 2.f,2.f });
+	SetOrigin(Origins::MC);
 	SetActive(false);
 }
 
@@ -77,7 +78,7 @@ void FireBall::FixedUpdate(float dt)
 	if (vause != nullptr)
 	{
 		auto vauseBounds = vause->GetGlobalBounds();
-		if (body.getGlobalBounds().intersects(vauseBounds) && !vause->IsInvincible())
+		if (body.getGlobalBounds().intersects(vauseBounds) && !vause->IsInvincible() && !vause->IsGameover())
 		{
 			vause->SetGameover(true);
 			SetActive(false);

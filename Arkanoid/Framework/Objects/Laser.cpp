@@ -94,7 +94,7 @@ void Laser::FixedUpdate(float dt)
 
 				if (body.getGlobalBounds().intersects(brickBound))
 				{
-					brick->OnHit();
+					brick->OnHit(damage);
 					SetActive(false);
 					isFire = false;
 					break;
@@ -108,7 +108,7 @@ void Laser::FixedUpdate(float dt)
 		auto bossBounds = boss->GetHitBox().rect.getGlobalBounds();
 		if (body.getGlobalBounds().intersects(bossBounds))
 		{
-			boss->OnHit(position);
+			boss->OnHit(position,damage);
 			SetActive(false);
 			isFire = false;
 		}

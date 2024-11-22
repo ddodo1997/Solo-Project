@@ -33,6 +33,8 @@ protected:
 	std::vector<std::vector<Bricks*>> bricks;
 	Boss* boss;
 
+	int damage = 1;
+	int devDamage = 99;
 
 	float slowTimer = 0.f;
 	float slowDelay = 10.f;

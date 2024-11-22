@@ -44,5 +44,7 @@ public:
 	void ReturnAllObj()override;
 
 	void ShootFireBall();
+
+	void OnUpgrade(UiDevMode::DevMenu menu)override;
 };
 

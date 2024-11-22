@@ -190,7 +190,11 @@ void Ball::FixedUpdate(float dt)
 
 						direction.x *= -1.f;
 					}
-					brick->OnHit();
+					if(isDevMode)
+						brick->OnHit(devDamage);
+					else
+						brick->OnHit(damage);
+
 					break;
 				}
 			}
@@ -223,8 +227,10 @@ void Ball::FixedUpdate(float dt)
 				position.y = bossBounds.height + bossBounds.top + radius * 4.f;
 				direction.y *= -1.f;
 			}
-
-			boss->OnHit(position);
+			if (isDevMode)
+				boss->OnHit(position,devDamage);
+			else
+				boss->OnHit(position,damage);
 		}
 	}
 

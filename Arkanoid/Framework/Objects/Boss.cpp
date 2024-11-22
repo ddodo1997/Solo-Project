@@ -66,6 +66,7 @@ void Boss::Reset()
 
 	hitBox.UpdateBoss(body, body.getLocalBounds());
 	PatternReset();
+	hp = 50;
 }
 
 void Boss::PatternReset()
@@ -162,7 +163,7 @@ void Boss::Pattern3(float dt)
 	{
 		pattern3.fireTimer += dt;
 
-		if(pattern3.fireTimer >= 1.5f)
+		if (pattern3.fireTimer >= 1.5f)
 			pattern3.isReady = true;
 
 		if (pattern3.fireDelay <= pattern3.fireTimer)
@@ -207,14 +208,14 @@ void Boss::Draw(sf::RenderWindow& window)
 	}
 }
 
-void Boss::OnHit(sf::Vector2f pos)
+void Boss::OnHit(sf::Vector2f pos, int damage)
 {
 	SOUND_MGR.PlaySfx("sounds/Arkanoid_boss_hit.wav");
 	animator.Play("animations/boss_hit.json");
 	animator.PlayQueue("animations/boss_idle.json");
 	animator.SetSpeed(1.f);
 	sceneGame->SpawnItem(pos);
-	hp--;
+	hp -= damage;
 
 	if (isDie())
 		OnDie();

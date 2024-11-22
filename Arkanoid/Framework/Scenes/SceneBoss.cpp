@@ -40,6 +40,7 @@ void SceneBoss::Exit()
 
 void SceneBoss::Update(float dt)
 {
+	SceneGame::Update(dt);
 	if (vause->IsGameover())
 	{
 		ReturnAllObj();
@@ -53,7 +54,6 @@ void SceneBoss::Update(float dt)
 		return;
 	}
 
-	SceneGame::Update(dt);
 
 	if (boss->isDie())
 	{
@@ -169,4 +169,11 @@ void SceneBoss::ReturnAllObj()
 void SceneBoss::ShootFireBall()
 {
 	fire->Shoot(boss->GetTargetPos());
+}
+
+void SceneBoss::OnUpgrade(UiDevMode::DevMenu menu)
+{
+	SceneGame::OnUpgrade(menu);
+	if (menu == UiDevMode::DevMenu::ClearUp)
+		boss->OnHit({ 0.f,0.f }, 50);
 }

@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "TileMap.h"
 #include "UiInGame.h"
+#include "UiDevMode.h"
 #include "Bricks.h"
 #include "Item.h"
 #include "Laser.h"
@@ -23,6 +24,7 @@ void SceneGame::Init()
 	}
 	uiInGame = AddGo(new UiInGame("UiInGame"));
 	uiCenter = AddGo(new UiCenter("UiCenter"));
+	uiDevMode = AddGo(new UiDevMode("UiDevMode"));
 
 	Scene::Init();
 }
@@ -102,8 +104,9 @@ void SceneGame::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::C))
 	{
 		Variables::isDrawHitBox = !Variables::isDrawHitBox;
+		Variables::devMode = !Variables::devMode;
+		uiDevMode->SetActive(Variables::devMode);
 	}
-
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -157,4 +160,33 @@ void SceneGame::ReturnAllObj()
 		ballsPool.Return(ball);
 	}
 	activeBalls.clear();
+}
+
+void SceneGame::OnUpgrade(UiDevMode::DevMenu dev)
+{
+	switch (dev)
+	{
+	case UiDevMode::DevMenu::FullLife:
+		vause->SetLife(99);
+		break;
+	case UiDevMode::DevMenu::SuperBall:
+		for (auto& ball : activeBalls)
+		{
+			ball->SetDevMode();
+		}
+		break;
+	case UiDevMode::DevMenu::ClearUp:
+		for (auto& vec : bricks)
+		{
+			for (auto& brick : vec)
+			{
+				if(brick->GetCurrentType() != Bricks::Types::None)
+					brick->OnHit(1000000);
+			}
+		}
+		break;
+	case UiDevMode::DevMenu::Invincible:
+		vause->SetDevMode();
+		break;
+	}
 }

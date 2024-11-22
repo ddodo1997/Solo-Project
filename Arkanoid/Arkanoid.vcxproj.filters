@@ -121,6 +121,12 @@
     <ClCompile Include="Framework\Objects\FireBall.cpp">
       <Filter>Framework\Objects\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Objects\Text\UiFrame.cpp">
+      <Filter>Framework\Objects\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\Text\UiDevMode.cpp">
+      <Filter>Framework\Objects\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -254,6 +260,12 @@
     </ClInclude>
     <ClInclude Include="Framework\Objects\FireBall.h">
       <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Text\UiFrame.h">
+      <Filter>Framework\Objects\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Text\UiDevMode.h">
+      <Filter>Framework\Objects\Text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
