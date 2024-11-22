@@ -3,6 +3,7 @@
 class Vause;
 class SceneGame;
 class Bricks;
+class Boss;
 class Ball :
     public GameObject
 {
@@ -30,6 +31,8 @@ protected:
 
 	SceneGame* sceneGame;
 	std::vector<std::vector<Bricks*>> bricks;
+	Boss* boss;
+
 
 	float slowTimer = 0.f;
 	float slowDelay = 10.f;

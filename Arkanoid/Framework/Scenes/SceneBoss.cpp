@@ -3,7 +3,11 @@
 #include "Vause.h"
 #include "Ball.h"
 #include "Boss.h"
+#include "Shuriken.h"
+#include "LavaRain.h"
+#include "FireBall.h"
 #include "UiInGame.h"
+#include "UiCenter.h"
 SceneBoss::SceneBoss() : SceneGame(SceneIds::Boss)
 {
 	currentMode = Mode::Boss;
@@ -12,6 +16,7 @@ SceneBoss::SceneBoss() : SceneGame(SceneIds::Boss)
 void SceneBoss::Init()
 {
 	boss = AddGo(new Boss("Boss"));
+	fire = AddGo(new FireBall("FireBall"));
 	SceneGame::Init();
 }
 
@@ -23,29 +28,39 @@ void SceneBoss::Enter()
 	ReturnAllObj();
 	vause->SetStatus(Vause::Status::Normal);
 	mainBall = SpawnBall(vause->GetPosition());
+	uiCenter->SetString("");
 }
 
 void SceneBoss::Exit()
 {
+	ReturnAllObj();
+
 	SceneGame::Exit();
 }
 
 void SceneBoss::Update(float dt)
 {
+	if (vause->IsGameover())
+	{
+		ReturnAllObj();
+		uiCenter->SetString("Press Enter To Main...");
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+		{
+			SCENE_MGR.ChangeScene(SceneIds::Main);
+			uiCenter->SetString("");
+		}
+
+		return;
+	}
+
 	SceneGame::Update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
+	if (boss->isDie())
 	{
-		boss->OnHit();
+		ReturnAllObj();
+		uiCenter->SetString("Congratulations!");
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
-	{
-		boss->Attack();
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num3))
-	{
-		boss->OnDie();
-	}
+
 }
 
 void SceneBoss::Draw(sf::RenderWindow& window)
@@ -73,7 +88,7 @@ void SceneBoss::SpawnItem(const sf::Vector2f& position)
 	int cnt = 0;
 	int weight = 0;
 
-	int percentage[6] = { 600,0,100,100,100,100 };
+	int percentage[6] = { 901,0,33,0,33,33 };
 	for (int i = 0; i < Item::TotalTypes; i++)
 	{
 		if (weight + percentage[i] >= rand)
@@ -91,4 +106,67 @@ void SceneBoss::SpawnItem(const sf::Vector2f& position)
 
 	AddGo(item);
 
+}
+
+
+Shuriken* SceneBoss::SpawnShuriken()
+{
+	Shuriken* shuriken = shurikenPool.Take();
+	activeShurikens.push_back(shuriken);
+
+	return AddGo(shuriken);
+}
+
+void SceneBoss::ReturnShuriken(Shuriken* shuriken)
+{
+	RemoveGo(shuriken);
+	shurikenPool.Return(shuriken);
+	activeShurikens.remove(shuriken);
+}
+
+void SceneBoss::FireShuriken()
+{
+	SpawnShuriken()->Fire(vause->GetPosition());
+}
+
+LavaRain* SceneBoss::SpawnRain()
+{
+	LavaRain* rain = rainPool.Take();
+	activeRains.push_back(rain);
+	return AddGo(rain);
+}
+
+void SceneBoss::ReturnRain(LavaRain* rain)
+{
+	RemoveGo(rain);
+	rainPool.Return(rain);
+	activeRains.remove(rain);
+}
+
+void SceneBoss::RainDrop()
+{
+	SpawnRain()->Drop(Utils::RandomRange(-280.f, 280.f));
+}
+
+void SceneBoss::ReturnAllObj()
+{
+	SceneGame::ReturnAllObj();
+	for (auto& shuriken : activeShurikens)
+	{
+		RemoveGo(shuriken);
+		shurikenPool.Return(shuriken);
+	}
+	activeShurikens.clear();
+
+	for (auto& rain : activeRains)
+	{
+		RemoveGo(rain);
+		rainPool.Return(rain);
+	}
+	activeRains.clear();
+}
+
+void SceneBoss::ShootFireBall()
+{
+	fire->Shoot(boss->GetTargetPos());
 }

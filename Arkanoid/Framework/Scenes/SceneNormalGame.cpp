@@ -75,10 +75,10 @@ void SceneNormalGame::Update(float dt)
 
 	if (vause->IsGameover())
 	{
-		uiCenter->SetString("Press Enter To Restart...");
+		uiCenter->SetString("Press Enter To Main...");
 		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 		{
-			SCENE_MGR.ChangeScene(SceneIds::NormalGame);
+			SCENE_MGR.ChangeScene(SceneIds::Main);
 			uiCenter->SetString("");
 		}
 

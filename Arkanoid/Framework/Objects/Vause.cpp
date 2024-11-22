@@ -97,14 +97,30 @@ void Vause::Reset()
 	enlargeTimer = 0.f;
 	laserTimer = 0.f;
 	lasers = sceneGame->GetLaser();
+	isInvincible = false;
 }
 
 void Vause::Update(float dt)
 {
 	animator.Update(dt);
+
+
+	if (isInvincible)
+	{
+		invincibleTimer += dt;
+		if (invincibleDelay <= invincibleTimer)
+		{
+			invincibleTimer = 0.f;
+			auto color = body.getColor();
+			color.a = 255;
+			body.setColor(color);
+			isInvincible = false;
+		}
+	}
+
 	if (currentStatus == Status::GameOver)
 		return;
-	
+
 	if (InputMgr::GetKey(sf::Keyboard::D) || InputMgr::GetKey(sf::Keyboard::Right))
 	{
 		direction.x = 1.f;
@@ -162,8 +178,8 @@ void Vause::UpdateLaser(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space) && sceneGame->GetMainBall()->isMove())
 	{
 		auto vauseBounds = GetGlobalBounds();
- 		lasers[(int)Laser::Direction::Left]->Fire({vauseBounds.left, vauseBounds.top},600.f);
-		lasers[(int)Laser::Direction::Right]->Fire({vauseBounds.width + vauseBounds.left, vauseBounds.top }, 600.f);
+		lasers[(int)Laser::Direction::Left]->Fire({ vauseBounds.left, vauseBounds.top }, 600.f);
+		lasers[(int)Laser::Direction::Right]->Fire({ vauseBounds.width + vauseBounds.left, vauseBounds.top }, 600.f);
 	}
 }
 
@@ -193,7 +209,7 @@ void Vause::SetStatus(Status stat)
 			ChangeAni("animations/longvause_idle.json");
 		break;
 	case Status::GameOver:
-		if(prevStatus != Status::GameOver)
+		if (prevStatus != Status::GameOver)
 			animator.Play("animations/vause_die.json");
 		break;
 	}
@@ -221,6 +237,24 @@ void Vause::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
 	hitBox.Draw(window);
+}
+
+void Vause::SetGameover(bool isGameover)
+{
+	auto color = body.getColor();
+	color.a = 180;
+	body.setColor(color);
+	isInvincible = true;
+
+	if (life > 0)
+	{
+		life--;
+		SOUND_MGR.PlaySfx("sounds/Arkanoid_lostball.wav");
+		return;
+	}
+	SOUND_MGR.PlaySfx("sounds/Arkanoid_gameover.wav");
+	SOUND_MGR.StopBgm();
+	SetStatus(Status::GameOver);
 }
 
 void Vause::OnPickupItem(Item::Types type)
@@ -281,7 +315,7 @@ void Vause::OnPickupItem(Item::Types type)
 				{
 					Utils::Normailize(rand1);
 				}
-				 dirMagnitude = Utils::Magnitude(rand2);
+				dirMagnitude = Utils::Magnitude(rand2);
 				if (dirMagnitude > 1.f)
 				{
 					Utils::Normailize(rand2);
@@ -301,4 +335,9 @@ void Vause::OnPickupItem(Item::Types type)
 		life++;
 		break;
 	}
+}
+
+void Vause::OnHit()
+{
+	life--;
 }

@@ -56,7 +56,6 @@ void UiInGame::Reset()
 	txthighScore.setCharacterSize(50);
 	txthighScore.setPosition({ size.x * 0.8f,0.f });
 
-
 	txtscore.setFont(font);
 	txtscore.setPosition({ size.x * 0.25f, 0.f });
 	txtscore.setCharacterSize(50);
@@ -77,12 +76,14 @@ void UiInGame::Update(float dt)
 
 void UiInGame::Draw(sf::RenderWindow& window)
 {
+	auto currentMode = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode();
 	window.draw(txtscore);
 	window.draw(txthighScore);
-	if (dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetCurrentMode() == SceneGame::Mode::Infinity)
-		return;
-	window.draw(extraLifeSprite);
-	window.draw(extraLifeText);
+	if (currentMode != SceneGame::Mode::Infinity)
+	{
+		window.draw(extraLifeSprite);
+		window.draw(extraLifeText);
+	}
 }
 
 void UiInGame::SetScore(int score)

@@ -112,6 +112,15 @@
     <ClCompile Include="Framework\Scenes\SceneBoss.cpp">
       <Filter>Framework\Scenes\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Objects\Shuriken.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\LavaRain.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\FireBall.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -236,6 +245,15 @@
     </ClInclude>
     <ClInclude Include="Framework\Scenes\SceneBoss.h">
       <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Shuriken.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\LavaRain.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\FireBall.h">
+      <Filter>Framework\Objects\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

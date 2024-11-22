@@ -37,6 +37,10 @@ protected:
 
 	float laserTimer = 0.f;
 	float laserDelay = 10.f;
+
+	float invincibleTimer = 0.f;
+	float invincibleDelay = 1.f;
+	bool isInvincible = false;
 public:
 	Vause(const std::string& name = "");
 	~Vause() = default;
@@ -67,19 +71,15 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	bool IsGameover() const { return currentStatus == Status::GameOver ? true : false; }
-	void SetGameover(bool isGameover) {
-		if (life > 0)
-		{
-			life--;
-			SOUND_MGR.PlaySfx("sounds/Arkanoid_lostball.wav");
-			return;
-		}
-		SOUND_MGR.PlaySfx("sounds/Arkanoid_gameover.wav");
-		SOUND_MGR.StopBgm();
-		SetStatus(Status::GameOver);
-	}
+	void SetGameover(bool isGameover);
+
+	bool IsInvincible()const { return isInvincible; }
+	void SetInvincible(bool stat) { isInvincible = stat; }
+
 	sf::FloatRect GetBatBounds() { return body.getGlobalBounds(); }
 	int GetExtraLife() const { return life; }
 
 	void OnPickupItem(Item::Types type);
+
+	void OnHit();
 };

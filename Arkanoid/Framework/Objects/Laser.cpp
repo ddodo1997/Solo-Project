@@ -3,6 +3,7 @@
 #include "Vause.h"
 #include "SceneGame.h"
 #include "Bricks.h"
+#include "Boss.h"
 Laser::Laser(const std::string& name)
 	: GameObject(name)
 {
@@ -57,7 +58,7 @@ void Laser::Reset()
 {
 	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 	vause = sceneGame->GetVause();
-
+	boss = sceneGame->GetBoss();
 	body.setTexture(TEXTURE_MGR.Get(texId));
 
 	body.setTextureRect(tex);
@@ -99,6 +100,17 @@ void Laser::FixedUpdate(float dt)
 					break;
 				}
 			}
+		}
+	}
+
+	if (boss != nullptr)
+	{
+		auto bossBounds = boss->GetHitBox().rect.getGlobalBounds();
+		if (body.getGlobalBounds().intersects(bossBounds))
+		{
+			boss->OnHit(position);
+			SetActive(false);
+			isFire = false;
 		}
 	}
 }

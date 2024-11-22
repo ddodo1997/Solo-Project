@@ -1,0 +1,13 @@
+{
+    "ID": "BossShuriken",
+    "LoopType": 1,
+    "FPS": 5,
+    "texId": "graphics/Ninja Gaiden Shadow.png",
+    "Frames":
+    [
+        [133, 247, 13, 13],
+        [155, 247, 13, 13],
+        [176, 247, 13, 13],
+        [198, 247, 13, 13]
+    ]
+}

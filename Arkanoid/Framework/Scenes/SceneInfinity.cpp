@@ -72,19 +72,20 @@ void SceneInfinity::Update(float dt)
 
 	if (vause->IsGameover())
 	{
-		uiCenter->SetString("Press Enter To Restart...");
+		uiCenter->SetString("Press Enter To Main...");
 		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 		{
-			SCENE_MGR.ChangeScene(SceneIds::Infinity);
+			SCENE_MGR.ChangeScene(SceneIds::Main);
 			uiCenter->SetString("");
 		}
 
 		return;
 	}
+
 	if (GameOver())
 	{
 		vause->SetGameover(true);
-		ReturnBall(mainBall);
+		ReturnAllObj();
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
@@ -162,7 +163,8 @@ void SceneInfinity::PushWave()
 		for (int j = 0; j < bricksSize.y; j++)
 		{
 			bricks[i][j]->SetType(bricks[i - 1][j]->GetCurrentType());
-			bricks[i][j]->SetHp(bricks[i - 1][j]->GetHp());
+			if(bricks[i][j]->GetCurrentType() == Bricks::Types::Super)
+				bricks[i][j]->SetHp(bricks[i - 1][j]->GetHp());
 		}
 	}
 	for (int i = 0; i < bricksSize.y; i++)

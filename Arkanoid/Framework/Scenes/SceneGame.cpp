@@ -55,6 +55,17 @@ void SceneGame::Update(float dt)
 	Scene::Update(dt);
 	UpdateUi();
 
+	auto mousePos = ScreenToWorld(InputMgr::GetMousePosition());
+
+
+
+	if (InputMgr::GetMouseButton(sf::Mouse::Right))
+	{
+		SpawnBall(mousePos)->Fire({ 0.f,1.f }, 100.f);
+	}
+
+
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
 		SCENE_MGR.ChangeScene(SceneIds::Main);

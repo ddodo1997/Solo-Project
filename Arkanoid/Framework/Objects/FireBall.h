@@ -1,33 +1,20 @@
 #pragma once
 class Vause;
-class SceneGame;
 class Boss;
-class Laser : public GameObject
+class FireBall : public GameObject
 {
-public:
-	enum class Direction
-	{
-		Left,
-		Right,
-	};
 protected:
 	sf::Sprite body;
 
-	std::string texId = "graphics/vause_sheet.png";
-	sf::IntRect tex = {148, 48, 10, 20};
-	sf::IntRect temp = { 0,0, 48, 66 };
-	sf::Vector2f direction = { 0.f,-1.f };
-	float speed = 300.f;
-
-	float movableTop;
+	Animator animator;
 	Vause* vause;
 	Boss* boss;
-	SceneGame* sceneGame;
 
-	bool isFire = false;
+	sf::Vector2f direction;
+	float speed = 1500.f;
 public:
-	Laser(const std::string& name = "");
-	~Laser() = default;
+	FireBall(const std::string& name = "");
+	~FireBall() = default;
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float angle) override;
@@ -43,6 +30,5 @@ public:
 	void FixedUpdate(float dt)override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void Fire(const sf::Vector2f& position, float s);
-	void SetFire(bool isFire) { this->isFire = isFire; }
+	void Shoot(sf::Vector2f targetDirection);
 };

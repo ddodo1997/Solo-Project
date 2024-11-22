@@ -1,0 +1,13 @@
+{
+    "ID": "BossRain",
+    "LoopType": 1,
+    "FPS": 5,
+    "texId": "graphics/Ninja Gaiden Shadow.png",
+    "Frames":
+    [
+        [302, 222, 41, 39],
+        [345, 222, 41, 39],
+        [302, 265, 41, 39],
+        [345, 265, 41, 39]
+    ]
+}

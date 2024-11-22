@@ -4,6 +4,7 @@
 #include "SceneGame.h"
 #include "TileMap.h"
 #include "Bricks.h"
+#include "Boss.h"
 Ball::Ball(const std::string& name)
 	:GameObject(name)
 {
@@ -49,6 +50,8 @@ void Ball::Reset()
 	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 	vause = sceneGame->GetVause();
 	bricks = sceneGame->GetBricks();
+	boss = sceneGame->GetBoss();
+	
 	direction = sf::Vector2f(0.f, 0.f);
 	speed = 0.f;
 
@@ -119,10 +122,7 @@ void Ball::Update(float dt)
 
 void Ball::FixedUpdate(float dt)
 {
-	//if (sceneGame->isStageClear())
-	//{
-	//	return;
-	//}
+
 	if (vause != nullptr)
 	{
 		auto vauseBounds = vause->GetBatBounds();
@@ -194,6 +194,37 @@ void Ball::FixedUpdate(float dt)
 					break;
 				}
 			}
+		}
+	}
+
+	if (boss != nullptr)
+	{
+		auto bossBounds = boss->GetHitBox().rect.getGlobalBounds();
+		if (bossBounds.intersects(ball.getGlobalBounds()))
+		{
+			if (position.x < bossBounds.left)
+			{
+				position.x = bossBounds.left - radius;
+				direction.x *= -1.f;
+			}
+			else if (position.x > bossBounds.width + bossBounds.left)
+			{
+				position.x = bossBounds.width + bossBounds.left + radius * 2.f;
+				direction.x *= -1.f;
+			}
+
+			else if (position.y > bossBounds.top && position.y <= bossBounds.top + radius * 2.f)
+			{
+				position.y = bossBounds.top - radius;
+				direction.y *= -1.f;
+			}
+			else if (position.y > bossBounds.height + bossBounds.top)
+			{
+				position.y = bossBounds.height + bossBounds.top + radius * 4.f;
+				direction.y *= -1.f;
+			}
+
+			boss->OnHit(position);
 		}
 	}
 

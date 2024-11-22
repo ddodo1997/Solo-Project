@@ -8,6 +8,7 @@ class UiCenter;
 class Bricks;
 class Item;
 class Laser;
+class Boss;
 class SceneGame : public Scene
 {
 public:
@@ -79,4 +80,6 @@ public:
 		if (this->score >= normalHighScore)
 			normalHighScore = this->score;
 	}
+
+	virtual Boss* GetBoss() { return nullptr; }
 };

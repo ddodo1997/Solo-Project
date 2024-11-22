@@ -1,0 +1,13 @@
+{
+    "ID": "BossAttackRev",
+    "LoopType": 0,
+    "FPS": 6,
+    "texId": "graphics/Arcade - Arkanoid - DOH.png",
+    "Frames":
+    [
+        [193, 144, 61, 96],
+        [129, 144, 61, 96],
+        [65, 144, 61, 96],
+        [0, 144, 61, 96]
+    ]
+}
