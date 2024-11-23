@@ -3,7 +3,7 @@
 #include "SceneGame.h"
 #include "Boss.h"
 #include "Vause.h"
-#include <SceneBoss.h>
+#include "SceneBoss1.h"
 
 Shuriken::Shuriken(const std::string& name)
 	: GameObject(name)
@@ -58,7 +58,7 @@ void Shuriken::Release()
 
 void Shuriken::Reset()
 {
-	animator.Play("animations/boss_shuriken.json");
+	animator.Play("animations/Boss1/boss1_shuriken.json");
 	boss = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetBoss();
 	vause = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetVause();
 	SetScale({ 3.f,3.f });
@@ -72,7 +72,7 @@ void Shuriken::Update(float dt)
 
 
 	if (position.y >= 1000.f || position.x < -310.f || position.x > 300.f)
-		dynamic_cast<SceneBoss*>(SCENE_MGR.GetCurrentScene())->ReturnShuriken(this);
+		dynamic_cast<SceneBoss1*>(SCENE_MGR.GetCurrentScene())->ReturnShuriken(this);
 }
 
 void Shuriken::FixedUpdate(float dt)
@@ -83,7 +83,7 @@ void Shuriken::FixedUpdate(float dt)
 		if (body.getGlobalBounds().intersects(vauseBounds) && !vause->IsInvincible())
 		{
 			vause->SetGameover(true);
-			dynamic_cast<SceneBoss*>(SCENE_MGR.GetCurrentScene())->ReturnShuriken(this);
+			dynamic_cast<SceneBoss1*>(SCENE_MGR.GetCurrentScene())->ReturnShuriken(this);
 		}
 	}
 }

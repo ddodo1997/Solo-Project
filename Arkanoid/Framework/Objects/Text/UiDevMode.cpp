@@ -63,7 +63,8 @@ void UiDevMode::Reset()
 	case SceneGame::Mode::Infinity:
 		sceneGame = dynamic_cast<SceneInfinity*>(SCENE_MGR.GetCurrentScene());
 		break;
-	case SceneGame::Mode::Boss:
+	case SceneGame::Mode::Boss1:
+	case SceneGame::Mode::Boss2:
 		sceneGame = dynamic_cast<SceneBoss*>(SCENE_MGR.GetCurrentScene());
 		break;
 	}

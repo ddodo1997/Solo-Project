@@ -2,6 +2,8 @@
 #include "Bricks.h"
 #include "Item.h"
 #include "SceneGame.h"
+#include <SceneBoss2.h>
+#include "VauseFire.h"
 Bricks::Bricks(const std::string& name)
 	: GameObject(name)
 {
@@ -238,6 +240,12 @@ void Bricks::SetType(Types type)
 
 void Bricks::OnHit(int damage)
 {
+	auto sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
+	if (sceneGame->GetCurrentMode() == SceneGame::Mode::Boss2)
+	{
+		dynamic_cast<SceneBoss2*>(sceneGame)->SpawnVauseFire()->Fire(position);
+	}
+
 	if(animator)
 	{
 		switch (currentType)

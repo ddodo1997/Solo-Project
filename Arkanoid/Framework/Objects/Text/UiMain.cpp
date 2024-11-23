@@ -155,7 +155,7 @@ void UiMain::Update(float dt)
 			SCENE_MGR.ChangeScene(SceneIds::Infinity);
 			break;
 		case Select::Boss:
-			SCENE_MGR.ChangeScene(SceneIds::Boss);
+			SCENE_MGR.ChangeScene(SceneIds::Boss1);
 			break;
 		case Select::Exit:
 			FRAMEWORK.GetWindow().close();

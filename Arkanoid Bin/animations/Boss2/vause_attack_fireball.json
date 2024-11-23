@@ -1,0 +1,13 @@
+{
+    "ID": "VauseAttackFireBall",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/Neo_Geo_NGCD_-_Metal_Slug_3_-_U25U_Unused_Projectile-removebg-preview.png",
+    "Frames":
+    [
+        [5,17,13,30],
+        [24,17,13,30],
+        [43,17,13,30],
+        [62,17,13,30]
+    ]
+}

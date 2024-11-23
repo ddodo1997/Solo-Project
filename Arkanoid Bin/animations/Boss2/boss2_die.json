@@ -1,0 +1,10 @@
+{
+    "ID": "Boss2Die",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/Thwomp.png",
+    "Frames":
+    [
+        [420,181,23,31]
+    ]
+}

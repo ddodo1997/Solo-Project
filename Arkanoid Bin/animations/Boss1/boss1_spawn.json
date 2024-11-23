@@ -1,5 +1,5 @@
 {
-    "ID": "BossSpawn",
+    "ID": "Boss1Spawn",
     "LoopType": 0,
     "FPS": 5,
     "texId": "graphics/Arcade - Arkanoid - DOH.png",

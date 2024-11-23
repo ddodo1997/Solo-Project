@@ -25,7 +25,9 @@ public:
 	{
 		Normal,
 		Infinity,
-		Boss,
+		Boss1,
+		Boss2,
+		BossRush,
 	};
 
 protected:

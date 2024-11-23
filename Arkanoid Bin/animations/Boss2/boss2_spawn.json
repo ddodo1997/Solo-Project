@@ -1,0 +1,12 @@
+{
+    "ID": "Boss2Spawn",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/Thwomp.png",
+    "Frames":
+    [
+        [368,75,23,31],
+        [368,75,23,31],
+        [368,75,23,31]
+    ]
+}

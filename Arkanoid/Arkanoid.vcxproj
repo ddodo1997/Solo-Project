@@ -149,6 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Objects\Boss1.cpp" />
+    <ClCompile Include="Framework\Objects\Boss2.cpp" />
     <ClCompile Include="Framework\Objects\FireBall.cpp" />
     <ClCompile Include="Framework\Objects\Boss.cpp" />
     <ClCompile Include="Framework\Objects\Bricks.cpp">
@@ -205,8 +207,14 @@
     <ClCompile Include="Framework\Objects\LavaRain.cpp" />
     <ClCompile Include="Framework\Objects\Text\UiFrame.cpp" />
     <ClCompile Include="Framework\Objects\Text\UiDevMode.cpp" />
+    <ClCompile Include="Framework\Scenes\SceneBoss1.cpp" />
+    <ClCompile Include="HeiHo.cpp" />
+    <ClCompile Include="SceneBoss2.cpp" />
+    <ClCompile Include="VauseFire.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Objects\Boss1.h" />
+    <ClInclude Include="Framework\Objects\Boss2.h" />
     <ClInclude Include="Framework\Objects\FireBall.h" />
     <ClInclude Include="Framework\Objects\Boss.h" />
     <ClInclude Include="Framework\Objects\Bricks.h" />
@@ -253,6 +261,10 @@
     <ClInclude Include="Framework\Objects\LavaRain.h" />
     <ClInclude Include="Framework\Objects\Text\UiFrame.h" />
     <ClInclude Include="Framework\Objects\Text\UiDevMode.h" />
+    <ClInclude Include="Framework\Scenes\SceneBoss1.h" />
+    <ClInclude Include="HeiHo.h" />
+    <ClInclude Include="SceneBoss2.h" />
+    <ClInclude Include="VauseFire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

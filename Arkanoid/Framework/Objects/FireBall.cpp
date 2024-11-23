@@ -58,7 +58,7 @@ void FireBall::Reset()
 {
 	boss = dynamic_cast<SceneBoss*>(SCENE_MGR.GetCurrentScene())->GetBoss();
 	vause = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene())->GetVause();
-	animator.Play("animations/boss_fire.json");
+	animator.Play("animations/Boss1/boss1_fire.json");
 	SetScale({ 2.f,2.f });
 	SetOrigin(Origins::MC);
 	SetActive(false);

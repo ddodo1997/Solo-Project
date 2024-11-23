@@ -1,0 +1,10 @@
+{
+    "ID": "HeiHoWaveGreen",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/boss2Attack.png",
+    "Frames":
+    [
+        [4,41,16,21]
+    ]
+}

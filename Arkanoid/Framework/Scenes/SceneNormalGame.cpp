@@ -61,7 +61,7 @@ void SceneNormalGame::Update(float dt)
 				SetStage(Stages::Stage3);
 				break;
 			case Stages::Stage3:
-				SCENE_MGR.ChangeScene(SceneIds::Boss);
+				SCENE_MGR.ChangeScene(SceneIds::Boss1);
 				break;
 			}
 			uiCenter->SetString("");

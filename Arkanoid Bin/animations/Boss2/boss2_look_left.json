@@ -1,0 +1,10 @@
+{
+    "ID": "Boss2LookLeft",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/Thwomp.png",
+    "Frames":
+    [
+        [341,111,23,31]
+    ]
+}

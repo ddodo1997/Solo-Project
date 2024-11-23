@@ -127,6 +127,22 @@
     <ClCompile Include="Framework\Objects\Text\UiDevMode.cpp">
       <Filter>Framework\Objects\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Scenes\SceneBoss1.cpp">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\Boss1.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Objects\Boss2.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBoss2.cpp">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="VauseFire.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="HeiHo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -267,6 +283,22 @@
     <ClInclude Include="Framework\Objects\Text\UiDevMode.h">
       <Filter>Framework\Objects\Text</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\Scenes\SceneBoss1.h">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Boss1.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Objects\Boss2.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBoss2.h">
+      <Filter>Framework\Scenes\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="VauseFire.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HeiHo.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

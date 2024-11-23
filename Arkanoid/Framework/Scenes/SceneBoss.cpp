@@ -3,28 +3,21 @@
 #include "Vause.h"
 #include "Ball.h"
 #include "Boss.h"
-#include "Shuriken.h"
-#include "LavaRain.h"
-#include "FireBall.h"
 #include "UiInGame.h"
 #include "UiCenter.h"
-SceneBoss::SceneBoss() : SceneGame(SceneIds::Boss)
+SceneBoss::SceneBoss(SceneIds id) : SceneGame(id)
 {
-	currentMode = Mode::Boss;
 }
 
 void SceneBoss::Init()
 {
-	boss = AddGo(new Boss("Boss"));
-	fire = AddGo(new FireBall("FireBall"));
 	SceneGame::Init();
 }
 
-
 void SceneBoss::Enter()
 {
-	SceneGame::Enter();	
-	
+	SceneGame::Enter();
+
 	ReturnAllObj();
 	vause->SetStatus(Vause::Status::Normal);
 	mainBall = SpawnBall(vause->GetPosition());
@@ -53,14 +46,6 @@ void SceneBoss::Update(float dt)
 
 		return;
 	}
-
-
-	if (boss->isDie())
-	{
-		ReturnAllObj();
-		uiCenter->SetString("Congratulations!");
-	}
-
 }
 
 void SceneBoss::Draw(sf::RenderWindow& window)
@@ -106,69 +91,6 @@ void SceneBoss::SpawnItem(const sf::Vector2f& position)
 
 	AddGo(item);
 
-}
-
-
-Shuriken* SceneBoss::SpawnShuriken()
-{
-	Shuriken* shuriken = shurikenPool.Take();
-	activeShurikens.push_back(shuriken);
-
-	return AddGo(shuriken);
-}
-
-void SceneBoss::ReturnShuriken(Shuriken* shuriken)
-{
-	RemoveGo(shuriken);
-	shurikenPool.Return(shuriken);
-	activeShurikens.remove(shuriken);
-}
-
-void SceneBoss::FireShuriken()
-{
-	SpawnShuriken()->Fire(vause->GetPosition());
-}
-
-LavaRain* SceneBoss::SpawnRain()
-{
-	LavaRain* rain = rainPool.Take();
-	activeRains.push_back(rain);
-	return AddGo(rain);
-}
-
-void SceneBoss::ReturnRain(LavaRain* rain)
-{
-	RemoveGo(rain);
-	rainPool.Return(rain);
-	activeRains.remove(rain);
-}
-
-void SceneBoss::RainDrop()
-{
-	SpawnRain()->Drop(Utils::RandomRange(-280.f, 280.f));
-}
-
-void SceneBoss::ReturnAllObj()
-{
-	SceneGame::ReturnAllObj();
-	for (auto& shuriken : activeShurikens)
-	{
-		RemoveGo(shuriken);
-		shurikenPool.Return(shuriken);
-	}
-	activeShurikens.clear();
-
-	for (auto& rain : activeRains)
-	{
-		RemoveGo(rain);
-		rainPool.Return(rain);
-	}
-	activeRains.clear();
-}
-
-void SceneBoss::ShootFireBall()
-{
-	fire->Shoot(boss->GetTargetPos());
 }
 
 void SceneBoss::OnUpgrade(UiDevMode::DevMenu menu)

@@ -1,0 +1,10 @@
+{
+    "ID": "Boss2Attackleft",
+    "LoopType": 1,
+    "FPS": 3,
+    "texId": "graphics/Thwomp.png",
+    "Frames":
+    [
+        [316,75,23,31]
+    ]
+}
