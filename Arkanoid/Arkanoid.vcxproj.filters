@@ -145,8 +145,8 @@
     <ClCompile Include="Framework\Objects\HeiHo.cpp">
       <Filter>Framework\Objects\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="LavaBall.cpp" />
-    <ClCompile Include="BulletBill.cpp" />
+    <ClCompile Include="Framework\Objects\LavaBall.cpp" />
+    <ClCompile Include="Framework\Objects\BulletBill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -305,8 +305,8 @@
     <ClInclude Include="Framework\Objects\HeiHo.h">
       <Filter>Framework\Objects\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="LavaBall.h" />
-    <ClInclude Include="BulletBill.h" />
+    <ClInclude Include="Framework\Objects\LavaBall.h" />
+    <ClInclude Include="Framework\Objects\BulletBill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
