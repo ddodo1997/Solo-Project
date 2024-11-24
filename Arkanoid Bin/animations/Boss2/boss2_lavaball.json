@@ -1,0 +1,11 @@
+{
+    "ID": "LavaBall",
+    "LoopType": 1,
+    "FPS": 10,
+    "texId": "graphics/LavaBall.png",
+    "Frames":
+    [
+        [1,1,16,16],
+        [21,1,16,16]
+    ]
+}

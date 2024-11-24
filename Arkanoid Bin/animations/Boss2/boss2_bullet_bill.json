@@ -1,0 +1,10 @@
+{
+    "ID": "BulletBill",
+    "LoopType": 1,
+    "FPS": 10,
+    "texId": "graphics/bullet_bill.png",
+    "Frames":
+    [
+        [54,24,12,15]
+    ]
+}

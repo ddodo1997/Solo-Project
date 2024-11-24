@@ -36,6 +36,7 @@ void SceneNormalGame::Enter()
 	SceneGame::Enter();
 	SetStage(Stages::Stage1);
 	uiCenter->SetString("");
+	score = 0;
 }
 
 void SceneNormalGame::Exit()
@@ -61,6 +62,7 @@ void SceneNormalGame::Update(float dt)
 				SetStage(Stages::Stage3);
 				break;
 			case Stages::Stage3:
+				prevMode = currentMode;
 				SCENE_MGR.ChangeScene(SceneIds::Boss1);
 				break;
 			}

@@ -74,6 +74,7 @@ void SceneMgr::OnPostDraw()
 	if (nextScene != SceneIds::None)
 	{
 		scenes[(int)currentScene]->Exit();
+		scenes[(int)nextScene]->score = scenes[(int)currentScene]->score;
 		currentScene = nextScene;
 		nextScene = SceneIds::None;
 		scenes[(int)currentScene]->Enter();

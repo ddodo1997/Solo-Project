@@ -2,6 +2,7 @@
 #include "Boss1.h"
 #include "SceneBoss1.h"
 #include "Shuriken.h"
+#include "UiCenter.h"
 #include "Vause.h"
 Boss1::Boss1(const std::string& name)
 	: Boss(name)
@@ -77,7 +78,9 @@ void Boss1::Update(float dt)
 {
 	Boss::Update(dt);
 	if (isDie())
+	{
 		return;
+	}
 
 	Pattern1(dt);
 
@@ -213,6 +216,7 @@ void Boss1::Attack()
 
 void Boss1::OnDie()
 {
+	sceneGame->AddScore(30000);
 	animator.Play("animations/Boss1/boss1_spawn.json");
 	animator.SetSpeed(-1.f);
 }

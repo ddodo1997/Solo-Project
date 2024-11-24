@@ -18,6 +18,7 @@ protected:
 	int normalHighScore = 0;
 	int BestRecordWave = 0;
 public:
+	int score = 0;
 	const SceneIds id;
 
 	Scene(SceneIds id);

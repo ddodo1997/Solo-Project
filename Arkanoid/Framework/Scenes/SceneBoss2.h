@@ -2,6 +2,8 @@
 #include "SceneBoss.h"
 class VauseFire;
 class HeiHo;
+class LavaBall;
+class BulletBill;
 class SceneBoss2 :
     public SceneBoss
 {
@@ -13,6 +15,12 @@ protected:
 
 	ObjectPool<HeiHo> heiHoPool;
 	std::list<HeiHo*> activeHeiHo;
+
+	ObjectPool<LavaBall> lavaPool;
+	std::list<LavaBall*> activeLava;
+
+	ObjectPool<BulletBill> billPool;
+	std::list<BulletBill*> activeBill;
 
 	bool shaking = false;
 public:
@@ -38,5 +46,11 @@ public:
 
 	HeiHo* SpawnHeiHo();
 	void ReturnHeiHo(HeiHo* val);
+
+	LavaBall* SpawnLava();
+	void ReturnLava(LavaBall* val);
+
+	BulletBill* SpawnBill();
+	void ReturnBill(BulletBill* val);
 };
 

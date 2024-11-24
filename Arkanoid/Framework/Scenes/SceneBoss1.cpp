@@ -36,7 +36,12 @@ void SceneBoss1::Update(float dt)
 	if (boss->isDie())
 	{
 		ReturnAllObj();
-		uiCenter->SetString("Congratulations!");
+		uiCenter->SetString("Press Enter To Next Boss!");
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+		{
+			prevMode = currentMode;
+			SCENE_MGR.ChangeScene(SceneIds::Boss2);
+		}
 	}
 }
 

@@ -6,6 +6,8 @@
 #include "SceneBoss2.h"
 #include "TileMap.h"
 #include "HeiHo.h"
+#include "LavaBall.h"
+#include "BulletBill.h"
 Boss2::Boss2(const std::string& name)
 	:Boss(name)
 {
@@ -68,6 +70,7 @@ void Boss2::PatternReset()
 	pattern2.accelTimer = 0.f;
 	pattern2.isAccel = false;
 	pattern2.isDecel = false;
+	pattern2.patternCnt = 0;
 
 	pattern3.isJumping = false;
 	pattern3.jumpCnt = 0;
@@ -78,25 +81,18 @@ void Boss2::Update(float dt)
 {
 	Boss::Update(dt);
 	if (isDie())
+	{
 		return;
+	}
 	hitBox.UpdateTr(body, body.getLocalBounds());
-
-	if (InputMgr::GetKey(sf::Keyboard::Num1))
-		animator.Play("animations/Boss2/boss2_attack_left.json");
-	if (InputMgr::GetKey(sf::Keyboard::Num2))
-		animator.Play("animations/Boss2/boss2_attack_right.json");
-	if (InputMgr::GetKey(sf::Keyboard::Num3))
-		animator.Play("animations/Boss2/boss2_die.json");
 
 	switch (currentPattern)
 	{
 	case Boss2::Pattern::None:
-		//LookVause();
 		patternTimer += dt;
 		if (patternTimer >= patternDelay)
 		{
-			//SetPattern((Pattern)Utils::RandomRange(1, position.y < -200.f ? 2 : 3));
-			SetPattern((Pattern)Utils::RandomRange(1, 1));
+			SetPattern((Pattern)Utils::RandomRange(1, position.y < -250.f ? 2 : 3));
 			patternTimer = 0.f;
 		}
 		break;
@@ -151,10 +147,15 @@ void Boss2::Pattern2(float dt)
 	}
 
 	if (pattern2.isDecel)
-		velocity -= dt * 800;
+		velocity -= dt * 2000;
 
 	if (velocity < 0.f)
 	{
+		auto bossBounds = body.getGlobalBounds();
+		sf::Vector2f pos = { bossBounds.left + bossBounds.width, bossBounds.top + bossBounds.height };
+		for (int i = 0; i < 10; i++)
+			dynamic_cast<SceneBoss2*>(sceneGame)->SpawnLava()->Scatter(pos);
+		pattern2.patternCnt = 0;
 		velocity = 0.f;
 		SetPattern(Pattern::None);
 	}
@@ -193,6 +194,7 @@ void Boss2::SetPattern(Pattern pattern)
 	{
 	case Boss2::Pattern::None:
 		this->direction = { 0.f,1.f };
+		LookVause();
 		break;
 	case Boss2::Pattern::Pattern1:
 		Fire({ position.x > 0.f ? -1.f : 1.f, 0.f });
@@ -229,25 +231,26 @@ void Boss2::FixedUpdate(float dt)
 		mapBounds.height + mapBounds.top - 95.f
 	};
 
+	auto bossBounds = body.getGlobalBounds();
 
 	if (position.x < movableBounds.left)
 	{
 		position.x = movableBounds.left;
 		direction.x *= -1.f;
-		Butt();
+		Butt({ bossBounds.left, bossBounds.top + bossBounds.height * 0.5f });
 	}
 	else if (position.x > movableBounds.width)
 	{
 		position.x = movableBounds.width;
 		direction.x *= -1.f;
-		Butt();
+		Butt({bossBounds.left + bossBounds.width, bossBounds.top + bossBounds.height * 0.5f });
 	}
 
 	if (position.y < movableBounds.top)
 	{
 		position.y = movableBounds.top;
 		direction.y *= -1.f;
-		Butt();
+		Butt({ bossBounds.left + bossBounds.width * 0.5f, bossBounds.top});
 	}
 	for (auto& vec : sceneGame->GetBricks())
 	{
@@ -258,15 +261,8 @@ void Boss2::FixedUpdate(float dt)
 			{
 				position.y = brickBounds.top - 91.f;
 				direction.y *= -1.f;
-				Butt();
-				if (currentPattern == Pattern::Pattern3)
-				{
-					pattern3.isJumping = false;
-					pattern3.jumpCnt++;
-					pattern3.jumpTimer = 0.f;
-					direction.y = 1.f;
-					velocity = 0.f;
-				}
+				Butt({ bossBounds.left + bossBounds.width * 0.5f, bossBounds.top + bossBounds.height});
+				break;
 			}
 		}
 	}
@@ -295,6 +291,7 @@ void Boss2::Attack()
 
 void Boss2::OnDie()
 {
+	sceneGame->AddScore(50000);
 	animator.Play("animations/Boss2/boss2_die.json");
 }
 
@@ -309,7 +306,7 @@ void Boss2::LookVause()
 		animator.PlayQueue("animations/Boss2/boss2_look_down.json");
 }
 
-void Boss2::Butt()
+void Boss2::Butt(sf::Vector2f pos)
 {
 	dynamic_cast<SceneBoss2*>(sceneGame)->Shake();
 	SOUND_MGR.PlaySfx("sounds/Thwomp_Sound.wav");
@@ -323,10 +320,28 @@ void Boss2::Butt()
 		pattern1.patternTimer = 0.f;
 		break;
 	case Boss2::Pattern::Pattern2:
+		pattern2.patternCnt++;
+		if (pattern2.patternCnt % 3 == 0)
+		{
+			for(int i = 0 ; i < 10 ; i++)
+				dynamic_cast<SceneBoss2*>(sceneGame)->SpawnLava()->Scatter(pos);
+		}
 		break;
 	case Boss2::Pattern::Pattern3:
+	{
+		pattern3.isJumping = false;
+		pattern3.jumpCnt++;
+		pattern3.jumpTimer = 0.f;
+		direction.y = 1.f;
+		velocity = 0.f;
+		auto rand = Utils::RandomRange(0, 11);
+		for (int i = 0; i < 13; i++)
+		{
+			if (rand == i || rand + 1 == i)
+				continue;
+			dynamic_cast<SceneBoss2*>(sceneGame)->SpawnBill()->Fire({ -300.f + i * 50.f, -470.f });
+		}
 		break;
-	default:
-		break;
+	}
 	}
 }

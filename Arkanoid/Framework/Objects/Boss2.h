@@ -14,11 +14,10 @@ public:
 	struct Pattern1
 	{
 		//좌 혹은 우로 돌진해 들이받은쪽 천장에서 중앙까지 투사체 웨이브
-		//구현 완료
 		bool isButt = false;
 
 		float dropTimer = 0.f;
-		float dropDelay = 0.1f;
+		float dropDelay = 0.08f;
 
 		float patternTimer = 0.f;
 		float patternDelay = 1.f;
@@ -28,21 +27,21 @@ public:
 	struct Pattern2
 	{
 		//대각선으로 일정시간동안 돌진해 부딪힌 부분에서 마그마 터뜨리기
-		//구현 필요
 		bool isAccel = false;
 		bool isDecel = false;
 
 		float accelTimer = 0.f;
 		float accelDelay = 3.f;
+
+		int patternCnt = 0;
 	};
 	struct Pattern3
 	{
-		//3번 점프해 내려찍은 블럭아래로 뭔가 떨구기
-		//구현 필요
-		int jumpCnt = 0;
+		//3번 점프해 대포 발사
+		char jumpCnt = 0;
 
 		float jumpTimer = 0.f;
-		float jumpDelay = 3.f;
+		float jumpDelay = 2.f;
 
 		bool isJumping = false;
 	};
@@ -94,5 +93,5 @@ public:
 
 	void LookVause();
 
-	void Butt();
+	void Butt(sf::Vector2f pos);
 };

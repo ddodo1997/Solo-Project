@@ -27,7 +27,6 @@ public:
 		Infinity,
 		Boss1,
 		Boss2,
-		BossRush,
 	};
 
 protected:
@@ -46,9 +45,9 @@ protected:
 	UiInGame* uiInGame;
 	UiCenter* uiCenter;
 	UiDevMode* uiDevMode;
-	int score = 0;
 
 	Mode currentMode;
+	Mode prevMode;
 public:
 	SceneGame(SceneIds id);
 	~SceneGame() = default;

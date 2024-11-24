@@ -22,6 +22,8 @@ void SceneMain::Enter()
 
 	uiView.setSize(size);
 	uiView.setCenter(size.x * 0.5f, size.y * 0.5f);
+
+	score = 0;
 }
 
 void SceneMain::Exit()

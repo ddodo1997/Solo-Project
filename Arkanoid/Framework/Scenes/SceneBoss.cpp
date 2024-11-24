@@ -17,7 +17,6 @@ void SceneBoss::Init()
 void SceneBoss::Enter()
 {
 	SceneGame::Enter();
-
 	ReturnAllObj();
 	vause->SetStatus(Vause::Status::Normal);
 	mainBall = SpawnBall(vause->GetPosition());

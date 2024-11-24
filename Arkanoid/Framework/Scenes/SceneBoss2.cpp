@@ -3,7 +3,10 @@
 #include "Bricks.h"
 #include "VauseFire.h"
 #include "HeiHo.h"
+#include "LavaBall.h"
+#include "BulletBill.h"
 #include "SceneBoss2.h"
+#include "UiCenter.h"
 
 SceneBoss2::SceneBoss2():SceneBoss(SceneIds::Boss2)
 {
@@ -57,7 +60,16 @@ void SceneBoss2::Exit()
 
 void SceneBoss2::Update(float dt)
 {
-	SceneBoss::Update(dt);
+	SceneBoss::Update(dt);	
+	if (boss->isDie())
+	{
+		ReturnAllObj();
+		uiCenter->SetString("Congratulations!");
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+		{
+			SCENE_MGR.ChangeScene(SceneIds::Main);
+		}
+	}
 	if (shaking)
 		ViewShake(0.5f,dt);
 }
@@ -106,6 +118,20 @@ void SceneBoss2::ReturnAllObj()
 		heiHoPool.Return(heiho);
 	}
 	activeHeiHo.clear();
+
+	for (auto lava : activeLava)
+	{
+		RemoveGo(lava);
+		lavaPool.Return(lava);
+	}
+	activeLava.clear();
+
+	for (auto bill : activeBill)
+	{
+		RemoveGo(bill);
+		billPool.Return(bill);
+	}
+	activeBill.clear();
 }
 
 VauseFire* SceneBoss2::SpawnVauseFire()
@@ -134,4 +160,32 @@ void SceneBoss2::ReturnHeiHo(HeiHo* val)
 	RemoveGo(val);
 	heiHoPool.Return(val);
 	activeHeiHo.remove(val);
+}
+
+LavaBall* SceneBoss2::SpawnLava()
+{
+	LavaBall* lava = lavaPool.Take();
+	activeLava.push_back(lava);
+	return AddGo(lava);
+}
+
+void SceneBoss2::ReturnLava(LavaBall* val)
+{
+	RemoveGo(val);
+	lavaPool.Return(val);
+	activeLava.remove(val);
+}
+
+BulletBill* SceneBoss2::SpawnBill()
+{
+	BulletBill* bill = billPool.Take();
+	activeBill.push_back(bill);
+	return AddGo(bill);
+}
+
+void SceneBoss2::ReturnBill(BulletBill* val)
+{
+	RemoveGo(val);
+	billPool.Return(val);
+	activeBill.remove(val);
 }

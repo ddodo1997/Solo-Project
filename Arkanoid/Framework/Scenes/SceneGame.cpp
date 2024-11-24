@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "Laser.h"
 #include "UiCenter.h"
+
 SceneGame::SceneGame(SceneIds id) : Scene(id)
 {
 
@@ -42,8 +43,6 @@ void SceneGame::Enter()
 
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize.x * 0.5f, windowSize.y * 0.5f);
-
-	score = 0;
 }
 
 void SceneGame::Exit()

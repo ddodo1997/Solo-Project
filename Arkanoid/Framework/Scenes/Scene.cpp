@@ -16,8 +16,6 @@ void Scene::Init()
 	{
 		obj->Init();
 	}
-	normalHighScore = SAVELOAD_MGR.Load().normalHighScore;
-	BestRecordWave = SAVELOAD_MGR.Load().BestRecordWave;
 }
 
 void Scene::Release()
@@ -37,6 +35,8 @@ void Scene::Enter()
 		obj->Reset();
 		obj->OnLocallize(Variables::currentLang);
 	}
+	normalHighScore = SAVELOAD_MGR.Load().normalHighScore;
+	BestRecordWave = SAVELOAD_MGR.Load().BestRecordWave;
 }
 
 void Scene::Exit()
@@ -48,11 +48,13 @@ void Scene::Exit()
 	FONT_MGR.UnloadAll();
 	SOUNDBUFFER_MGR.UnloadAll();
 
+	if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Main)
+		return;
+
 	SaveDataVC data;
 	data.normalHighScore = normalHighScore;
 	data.BestRecordWave = BestRecordWave;
-	if(!Variables::devMode)
-		SAVELOAD_MGR.Save(data);
+	SAVELOAD_MGR.Save(data);
 }
 
 void Scene::Update(float dt)

@@ -136,13 +136,17 @@
     <ClCompile Include="Framework\Objects\Boss2.cpp">
       <Filter>Framework\Objects\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="SceneBoss2.cpp">
+    <ClCompile Include="Framework\Scenes\SceneBoss2.cpp">
       <Filter>Framework\Scenes\Game</Filter>
     </ClCompile>
-    <ClCompile Include="VauseFire.cpp">
+    <ClCompile Include="Framework\Objects\VauseFire.cpp">
       <Filter>Framework\Objects\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="HeiHo.cpp" />
+    <ClCompile Include="Framework\Objects\HeiHo.cpp">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LavaBall.cpp" />
+    <ClCompile Include="BulletBill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation\AnimationClip.h">
@@ -292,13 +296,17 @@
     <ClInclude Include="Framework\Objects\Boss2.h">
       <Filter>Framework\Objects\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="SceneBoss2.h">
+    <ClInclude Include="Framework\Scenes\SceneBoss2.h">
       <Filter>Framework\Scenes\Game</Filter>
     </ClInclude>
-    <ClInclude Include="VauseFire.h">
+    <ClInclude Include="Framework\Objects\VauseFire.h">
       <Filter>Framework\Objects\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="HeiHo.h" />
+    <ClInclude Include="Framework\Objects\HeiHo.h">
+      <Filter>Framework\Objects\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="LavaBall.h" />
+    <ClInclude Include="BulletBill.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
