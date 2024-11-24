@@ -89,10 +89,10 @@ void Vause::Reset()
 	Utils::SetOrigin(body, Origins::TC);
 	SetPosition({ 0.f,400.f });
 
-	if (sceneGame->GetCurrentMode() == SceneGame::Mode::Normal)
-		life = 3;
-	else if (sceneGame->GetCurrentMode() == SceneGame::Mode::Infinity)
+	if (sceneGame->GetCurrentMode() == SceneGame::Mode::Infinity)
 		life = 0;
+	else
+		life = 3;
 	currentStatus = Status::Normal;
 	enlargeTimer = 0.f;
 	laserTimer = 0.f;
