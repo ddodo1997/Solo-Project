@@ -58,6 +58,7 @@ void Boss2::Reset()
 	SetPosition({ 0.f, -300.f });
 	SetScale({ 5.5f, 5.5f });
 	PatternReset();
+	SetPattern(Pattern::None);
 	hp = 30;
 }
 
